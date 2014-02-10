@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<project name="jspacal" default="dist" basedir=".">
+	<description>Java Solar Position Algorithm CALculator tool</description>
+	<property name="version" value="1.0"/>
+	<property name="author" value="Przemyslaw Jacewicz"/>
+	<property name="application.email" value="przemyslaw.jacewicz@gmail.com"/>
+
+	<!-- local settings -->
+	<property name="etc.dir" value="etc"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="src.dir" value="src"/>
+	
+	<!-- target settings -->
+	<property name="build.dir" value="build"/>
+	<property name="dist.dir" value="dist"/>
+	<property name="dist.prep.dir" value="${dist.dir}/prep"/>
+
+	<property name="copyright.file" value="${etc.dir}/COPYRIGHT"/>	
+	<property name="readme.file" value="README"/>
+	<property name="license.file" value="LICENSE"/>
+	<property name="build.properties.file" value="build.properties"/>
+	<property name="jarfilename" value="${ant.project.name}-${version}.jar"/>
+
+	<!-- time stamps -->	
+	<tstamp>
+		<format property='YEAR' pattern='yyyy'/>
+	</tstamp>
+
+	<!-- COPYRIGHT file -->
+	<loadfile srcFile="${copyright.file}" property="copyright">
+		<filterchain>
+			<replacetokens>
+				<token key="YEAR" value="2013"/>
+				<token key="PROJECT" value="${ant.project.name}"/>
+			</replacetokens>
+		</filterchain>
+	</loadfile>
+
+	<!-- non test src files patternset -->
+	<patternset id='non.test.src.files.patternset'>
+		<include name='**/*.java'/>
+		<exclude name='**/*Test*.java'/>
+	</patternset>
+
+	<!-- non test src files -->
+	<fileset id='non.test.src.files' dir='${src.dir}' casesensitive="no">
+		<patternset refid='non.test.src.files.patternset'/>
+	</fileset>
+
+	<filelist id='dist.files.list' dir='${basedir}'>
+		<file name='${ant.file}'/>
+		<file name='${license.file}'/>
+		<file name='${readme.file}'/> 
+	</filelist>
+
+	<!-- clean -->
+	<target name='clean' description='clean project'>
+		<delete dir='${build.dir}'/>
+		<delete file='${build.properties.file}'/>
+		<delete dir='${dist.dir}'/>
+	</target>
+
+	<!-- init -->
+	<target name='init' description='initialize project'>
+		<mkdir dir='${build.dir}'/>
+		<mkdir dir='${dist.dir}'/>
+		<mkdir dir='${dist.prep.dir}'/>
+		
+		<mkdir dir='${dist.prep.dir}/src'/>
+		<copy todir='${dist.prep.dir}/src'>
+			<fileset refid='non.test.src.files'/>
+			<filterset>
+				<filter token='COPYRIGHT' value='${copyright}'/>
+			</filterset>
+		</copy>
+		
+		<mkdir dir='${dist.prep.dir}/lib'/>
+		<copy todir='${dist.prep.dir}/lib'>
+			<fileset dir='${lib.dir}' includes='*.jar'/>
+		</copy>
+
+		<copy todir='${dist.prep.dir}'>
+			<filelist refid='dist.files.list'/>
+		</copy>
+	</target>
+
+	<!-- build -->
+	<target name='build' depends='init' description='build project'>
+		<javac srcdir='${dist.prep.dir}/src' destdir='${build.dir}' includeantruntime='false'>
+			<patternset refid='non.test.src.files.patternset'/>
+			<classpath>
+				<fileset dir='${dist.prep.dir}/lib' includes='**/*.jar'/>
+			</classpath>
+		</javac>
+
+		<propertyfile file='${build.properties.file}' comment='Auto-generated with ant'>
+			<entry key='Name' value='${ant.project.name}'/>
+			<entry key='Version' value='${version}'/>
+			<entry key='Author' value='${author}'/>
+			<entry key='Contact' value='${application.email}'/>
+		</propertyfile>
+	</target>
+	
+	<!-- jar -->
+	<target name='jar' depends='build' description='create jar'>
+		<jar jarfile='${dist.dir}/${jarfilename}' basedir='${build.dir}'>
+			<manifest>
+				<attribute name='Created-By' value='${author}'/>
+				<section name='${ant.project.name}'>
+					<attribute name='Specification-Title' value='Java logging library'/>
+					<attribute name='Specification-Version' value='${version}'/>
+					<attribute name='Specification-Vendor' value='${author}'/>
+					<attribute name='Implementation-Title' value='...'/>
+					<attribute name='Implementation-Version' value='${version}'/>
+					<attribute name='Implementation-Vendor' value='${author} (${application.email})'/>
+				</section>
+			</manifest>
+			<zipgroupfileset dir='${dist.prep.dir}/lib' includes='**/*.jar'/>
+		</jar>
+		<checksum file='${dist.dir}/${jarfilename}' forceOverwrite='yes'/>
+	</target>
+
+	<!-- tar -->
+	<target name='tar' depends='init' description='create tar.gz'>
+		<tar destfile='${dist.dir}/${ant.project.name}-${version}-src.tar.gz' compression='gzip'>
+			<tarfileset dir='${dist.prep.dir}' prefix='${ant.project.name}-${version}-src'/>
+		</tar>
+		<checksum file='${dist.dir}/${ant.project.name}-${version}-src.tar.gz' forceOverwrite='yes'/>
+	</target>
+
+	<!-- zip -->
+	<target name='zip' depends='init' description='create zip'>
+		<zip destfile='${dist.dir}/${ant.project.name}-${version}-src.zip' update='true'>
+			<zipfileset dir='${dist.prep.dir}' prefix='${ant.project.name}-${version}-src'/>
+		</zip>
+		<checksum file='${dist.dir}/${ant.project.name}-${version}-src.zip' forceOverwrite='yes'/>
+	</target>
+	
+	<target name='dist' depends='jar,zip,tar' description='make dist files'/>
+</project>
