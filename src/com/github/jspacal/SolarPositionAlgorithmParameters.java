@@ -1,6 +1,13 @@
+/**
+ @COPYRIGHT@
+ */
 package com.github.jspacal;
 
+import com.github.jlog.Logger;
+
 public class SolarPositionAlgorithmParameters {
+	private static final Logger LOGGER = Logger
+			.getLogger(SolarPositionAlgorithmParameters.class.getName());
 
 	/*
 	 * 4-digit year
@@ -20,15 +27,15 @@ public class SolarPositionAlgorithmParameters {
 	 * 2-digit day of month
 	 */
 	private int dayOfMonth;
-	private static final int DAY_MIN = 1;
-	private static final int DAY_MAX = 31;
+	private static final int DAY_OF_MONTH_MIN = 1;
+	private static final int DAY_OF_MONTH_MAX = 31;
 
 	/*
 	 * observer local hour of day
 	 */
 	private int hourOfDay;
-	private static final int HOUR_MIN = 0;
-	private static final int HOUR_MAX = 24;
+	private static final int HOUR_OF_DAY_MIN = 0;
+	private static final int HOUR_OF_DAY_MAX = 24;
 
 	/*
 	 * observer local minute
@@ -265,4 +272,91 @@ public class SolarPositionAlgorithmParameters {
 		return azimuthRotation;
 	}
 
+	public boolean isValid() {
+		if (year < YEAR_MIN || year > YEAR_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid year", year);
+			return false;
+		}
+
+		if (month < MONTH_MIN || month > MONTH_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid month", month);
+			return false;
+		}
+
+		if (dayOfMonth < DAY_OF_MONTH_MIN || dayOfMonth > DAY_OF_MONTH_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid day of month", dayOfMonth);
+			return false;
+		}
+
+		if (hourOfDay < HOUR_OF_DAY_MIN || hourOfDay > HOUR_OF_DAY_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid hour of day", hourOfDay);
+			return false;
+		}
+
+		if (minute < MINUTE_MIN || minute > MINUTE_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid minute", minute);
+			return false;
+		}
+
+		if (second < SECOND_MIN || second > SECOND_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid second", second);
+			return false;
+		}
+
+		if (timezone < TIMEZONE_MIN || timezone > TIMEZONE_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid timezone", timezone);
+			return false;
+		}
+
+		if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid longitude", longitude);
+			return false;
+		}
+
+		if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid latitude", latitude);
+			return false;
+		}
+
+		if (altitude < ALTITUDE_MIN) {
+			LOGGER.severe("[jspcal] {} is not valid altitude", altitude);
+			return false;
+		}
+
+		if (slope < SLOPE_MIN || slope > SLOPE_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid slope", slope);
+			return false;
+		}
+
+		if (pressure < PRESSURE_MIN || pressure > PRESSURE_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid pressure", pressure);
+			return false;
+		}
+
+		if (temperature < TEMPERATURE_MIN || temperature > TEMPERATURE_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid temperature", temperature);
+			return false;
+		}
+
+		if (atmosphericRefraction < ATMOSPHERIC_REFRACTION_MIN
+				|| atmosphericRefraction > ATMOSPHERIC_REFRACTION_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid atmospheric refraction",
+					atmosphericRefraction);
+			return false;
+		}
+
+		if (deltaT < DELTA_T_MIN || deltaT > DELTA_T_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid deltaT", deltaT);
+			return false;
+		}
+
+		if (azimuthRotation < AZIMUTH_ROTATION_MIN
+				|| azimuthRotation > AZIMUTH_ROTATION_MAX) {
+			LOGGER.severe("[jspcal] {} is not valid azimuth rotation",
+					azimuthRotation);
+			return false;
+		}
+
+		return true;
+	}
 }
