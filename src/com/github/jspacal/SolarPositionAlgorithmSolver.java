@@ -1,3 +1,6 @@
+/**
+ @COPYRIGHT@
+ */
 package com.github.jspacal;
 
 import static com.github.jspacal.SolarPositionAlgorithmConstants.*;
@@ -20,6 +23,7 @@ public class SolarPositionAlgorithmSolver {
 	double observerHourAngle = calculateObserverHourAngle(solution.getGreenwichSiderealTime(),
 		solution.getGeocentricSunRightAscension());
 	solution.setObserverHourAngle(observerHourAngle);
+
 	double sunEquatorialHorizontalParallax = calculateSunEquatorialHorizontalParallax(solution
 		.getEarthRadiusVector());
 	solution.setSunEquatorialHorizontalParallax(sunEquatorialHorizontalParallax);
@@ -27,6 +31,7 @@ public class SolarPositionAlgorithmSolver {
 	double sunRightAscensionParallax = calculateSunRightAscensionParallax(sunEquatorialHorizontalParallax,
 		observerHourAngle, solution.getGeocentricSunDeclination());
 	solution.setSunRightAscensionParallax(sunRightAscensionParallax);
+
 	double topocentricSunDeclination = calculateTopocentricSunDeclination(sunEquatorialHorizontalParallax,
 		observerHourAngle, solution.getGeocentricSunDeclination());
 	solution.setTopocentricSunDeclination(topocentricSunDeclination);
@@ -34,6 +39,7 @@ public class SolarPositionAlgorithmSolver {
 	double topocentricSunRightAscension = calculateTopocentricSunRightAscension(
 		solution.getGeocentricSunRightAscension(), sunRightAscensionParallax);
 	solution.setTopocentricSunRightAscension(topocentricSunRightAscension);
+
 	double topocentricLocalHourAngle = calculateTopocentricLocalHourAngle(observerHourAngle,
 		sunRightAscensionParallax);
 	solution.setTopocentricLocalHourAngle(topocentricLocalHourAngle);
@@ -41,12 +47,16 @@ public class SolarPositionAlgorithmSolver {
 	double topocentricElevationAngle = calculateTopocentricElevationAngle(topocentricSunDeclination,
 		topocentricLocalHourAngle);
 	solution.setTopocentricElevationAngle(topocentricElevationAngle);
+
 	double atmosphericRefractionCorrection = calculateAtmosphericRefractionCorrection(topocentricElevationAngle);
 	solution.setAtmosphericRefractionCorrection(atmosphericRefractionCorrection);
 
 	double topocentricElevationAngleCorrected = calculateTopocentricElevationAngleCorrected(
 		topocentricElevationAngle, atmosphericRefractionCorrection);
 	solution.setTopocentricElevationAngleCorrected(topocentricElevationAngleCorrected);
+
+	calculateEoTAndSTS(solution);
+
 	double topocentricZenithAngle = calculateTopocentricZenithAngle(topocentricElevationAngleCorrected);
 	solution.setTopocentricZenithAngle(topocentricZenithAngle);
 
@@ -57,11 +67,9 @@ public class SolarPositionAlgorithmSolver {
 	double topocentricAzimuthAngleEastwardFromNorth = calculateTopocentricAzimuthAngleZero360(topocentricAzimuthAngleWestwardFromSouth);
 	solution.setTopocentricAzimuthAngleEastwardFromNorth(topocentricAzimuthAngleEastwardFromNorth);
 
-	double surfaceIncidenceAngle = calculateSurfaceIncidenceAngle(topocentricAzimuthAngleEastwardFromNorth,
+	double surfaceIncidenceAngle = calculateSurfaceIncidenceAngle(topocentricZenithAngle,
 		topocentricAzimuthAngleWestwardFromSouth);
 	solution.setSurfaceIncidenceAngle(surfaceIncidenceAngle);
-
-	calculateEoTAndSTS(solution);
 
 	return solution;
     }
@@ -69,13 +77,13 @@ public class SolarPositionAlgorithmSolver {
     private double calculateJulianDay() {
 	int year = parameters.getYear();
 	int monthOfYear = parameters.getMonthOfYear();
-	int day = parameters.getDayOfMonth();
-	int hour = parameters.getHourOfDay();
+	int dayOfMonth = parameters.getDayOfMonth();
+	int hourOfDay = parameters.getHourOfDay();
 	int minuteOfHour = parameters.getMinuteOfHour();
 	int secondOfMinute = parameters.getSecondOfMinute();
 	double timezone = parameters.getTimezone();
 
-	double dayDecimal = day + (hour - timezone + (minuteOfHour + secondOfMinute / 60.0) / 60.0) / 24.0;
+	double dayDecimal = dayOfMonth + (hourOfDay - timezone + (minuteOfHour + secondOfMinute / 60.0) / 60.0) / 24.0;
 
 	if (monthOfYear < 3) {
 	    monthOfYear += 12;
@@ -94,12 +102,10 @@ public class SolarPositionAlgorithmSolver {
     }
 
     private void calculateGeocentricSunRightAscensionAndDeclination(SolarPositionAlgorithmSolverSolution solution) {
-	double julianDay = solution.getJulianDay();
-
-	double julianCentury = calculateJulianCentury(julianDay);
+	double julianCentury = calculateJulianCentury(solution.getJulianDay());
 	solution.setJulianCentury(julianCentury);
 
-	double julianEphemerisDay = calculateJulianEphemerisDay(julianDay);
+	double julianEphemerisDay = calculateJulianEphemerisDay(solution.getJulianDay());
 	solution.setJulianEphemerisDay(julianEphemerisDay);
 
 	double julianEphemerisCentury = calculateJulianEphemerisCentury(julianEphemerisDay);
@@ -138,7 +144,8 @@ public class SolarPositionAlgorithmSolver {
 	double ascendingLongitudeMoon = calculateAscendingLongitudeMoon(julianEphemerisCentury);
 	solution.setAscendingLongitudeMoon(ascendingLongitudeMoon);
 
-	double[] x = new double[TERM_X.TERM_X_COUNT.ordinal()];
+	//double[] x = new double[TERM_X.TERM_X_COUNT.ordinal()];
+	double[] x = new double[TERM_X.values().length];
 	x[TERM_X.TERM_X0.ordinal()] = meanElongationMoonSun;
 	x[TERM_X.TERM_X1.ordinal()] = meanAnomalySun;
 	x[TERM_X.TERM_X2.ordinal()] = meanAnomalyMoon;
@@ -160,7 +167,7 @@ public class SolarPositionAlgorithmSolver {
 	double apparentSunLongitude = calculateApparentSunLongitude(geocentricLongitude, nutationLongitude,
 		aberrationCorrection);
 	solution.setApparentSunLongitude(apparentSunLongitude);
-	double greenwichMeanSiderealTime = calculateGreenwichMeanSiderealTime(julianDay, julianCentury);
+	double greenwichMeanSiderealTime = calculateGreenwichMeanSiderealTime(solution.getJulianDay(), julianCentury);
 	solution.setGreenwichMeanSiderealTime(greenwichMeanSiderealTime);
 	double greenwichSiderealTime = calculateGreenwichSiderealTime(greenwichMeanSiderealTime, nutationLongitude,
 		eclipticTrueObliquity);
@@ -476,9 +483,9 @@ public class SolarPositionAlgorithmSolver {
 	return topocentricAzimuthAngleNeg180Pos180 + 180.0;
     }
 
-    private double calculateSurfaceIncidenceAngle(double topocentricAzimuthAngleEastwardFromNorth,
+    private double calculateSurfaceIncidenceAngle(double topocentricZenithAngle,
 	    double topocentricAzimuthAngleWestwardFromSouth) {
-	double zenithRad = Math.toRadians(topocentricAzimuthAngleEastwardFromNorth);
+	double zenithRad = Math.toRadians(topocentricZenithAngle);
 	double slopeRad = Math.toRadians(parameters.getSlope());
 
 	return Math
@@ -506,25 +513,25 @@ public class SolarPositionAlgorithmSolver {
 
 	double h0prime = -1 * (SUN_RADIUS + parameters.getAtmosphericRefraction());
 
-	SolarPositionAlgorithmSolver sunRtsSolver = new SolarPositionAlgorithmSolver(parameters);
-
 	double sunMeanLongitude = calculateSunMeanLongitude(solution.getJulianEphemerisMillenium());
-	double eot = calculateEquationOfTime(sunMeanLongitude, solution.getGeocentricSunRightAscension(),
+	double equationOfTime = calculateEquationOfTime(sunMeanLongitude, solution.getGeocentricSunRightAscension(),
 		solution.getNutationLongitude(), solution.getEclipticTrueObliquity());
+	solution.setEquationOfTime(equationOfTime);
+
+	SolarPositionAlgorithmSolver sunRtsSolver = new SolarPositionAlgorithmSolver(parameters);
+	SolarPositionAlgorithmSolverSolution sunRtsSolverSolution = new SolarPositionAlgorithmSolverSolution(solution);
 
 	sunRtsSolver.parameters.setHourOfDay(0);
 	sunRtsSolver.parameters.setMinuteOfHour(0);
 	sunRtsSolver.parameters.setSecondOfMinute(0);
 	sunRtsSolver.parameters.setTimezone(0.0);
 
-	SolarPositionAlgorithmSolverSolution sunRtsSolverSolution = new SolarPositionAlgorithmSolverSolution();
-
 	double julianDay = sunRtsSolver.calculateJulianDay();
 	sunRtsSolverSolution.setJulianDay(julianDay);
 	sunRtsSolver.calculateGeocentricSunRightAscensionAndDeclination(sunRtsSolverSolution);
 
 	sunRtsSolver.parameters.setDeltaT(0);
-	sunRtsSolverSolution.setJulianDay(julianDay--);
+	sunRtsSolverSolution.setJulianDay(solution.getJulianDay() - 1);
 
 	for (int i = 0; i < JD.JD_COUNT.ordinal(); i++) {
 	    sunRtsSolver.calculateGeocentricSunRightAscensionAndDeclination(sunRtsSolverSolution);

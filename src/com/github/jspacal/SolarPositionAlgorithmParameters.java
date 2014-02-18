@@ -72,7 +72,7 @@ public class SolarPositionAlgorithmParameters {
     private static final double LATITUDE_MAX = 90.0;
 
     /*
-     * observer elevation in meters
+     * observer altitude in meters
      */
     private double altitude;
     private static final double ALTITUDE_MIN = -6500000.0;
@@ -91,7 +91,7 @@ public class SolarPositionAlgorithmParameters {
     private double pressure;
     private static final double PRESSURE_MIN = 0.0;
     private static final double PRESSURE_MAX = 5000.0;
-    private static final double PRESSURE_DEFAULT = 870.0;
+    private static final double PRESSURE_DEFAULT = 835.0;
 
     /*
      * Annual average local temperature in Celsius
@@ -99,7 +99,7 @@ public class SolarPositionAlgorithmParameters {
     private double temperature;
     private static final double TEMPERATURE_MIN = -273.0;
     private static final double TEMPERATURE_MAX = 6000.0;
-    private static final double TEMPERATURE_DEFAULT = 20.0;
+    private static final double TEMPERATURE_DEFAULT = 10.0;
 
     /*
      * Atmospheric refraction at sunrise and sunset (0.5667 deg is typical)
@@ -118,7 +118,7 @@ public class SolarPositionAlgorithmParameters {
     private double deltaT;
     private static final double DELTA_T_MIN = -8000.0;
     private static final double DELTA_T_MAX = 8000.0;
-    private static final double DELTA_T_DEFAULT = 67.0;
+    private static final double DELTA_T_DEFAULT = 65.0;
 
     /*
      * Surface azimuth rotation (measured from south to projection of surface

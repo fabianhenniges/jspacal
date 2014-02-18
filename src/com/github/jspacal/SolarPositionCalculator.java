@@ -1,3 +1,6 @@
+/**
+ @COPYRIGHT@
+ */
 package com.github.jspacal;
 
 import org.joda.time.DateTime;
@@ -14,7 +17,7 @@ public class SolarPositionCalculator {
 	this.altitude = altitude;
     }
 
-    public double calculateSunElevation(DateTime datetime) {
+    public double calculateSunTopocentricZenithAngle(DateTime datetime) {
 	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters();
 	parameters.setYear(datetime.getYear());
 	parameters.setMonthOfYear(datetime.getMonthOfYear());
@@ -22,7 +25,10 @@ public class SolarPositionCalculator {
 	parameters.setHourOfDay(datetime.getHourOfDay());
 	parameters.setMinuteOfHour(datetime.getMinuteOfHour());
 	parameters.setSecondOfMinute(datetime.getSecondOfMinute());
-	parameters.setTimezone(0.0);
+	parameters.setTimezone(0.0);//TODO
+	parameters.setLongitude(longitude);
+	parameters.setLatitude(latitude);
+	parameters.setAltitude(altitude);
 
 	SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
 	return solver.solve().getTopocentricZenithAngle();

@@ -8,9 +8,9 @@ public class JSPACalTesting {
 
     public static void main(String[] args) {
 	SolarPositionCalculator solarCalculator = new SolarPositionCalculator(-105.178, 39.743, 1829);
-	DateTime datetime = new DateTime();
+	DateTime datetime = new DateTime(2014, 2, 18, 10, 0, 0, 0);
 
-	System.out.print(solarCalculator.calculateSunElevation(datetime));
+	System.out.print(solarCalculator.calculateSunTopocentricZenithAngle(datetime));
     }
 
 }

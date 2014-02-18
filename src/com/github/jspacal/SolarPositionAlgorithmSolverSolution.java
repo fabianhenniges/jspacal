@@ -1,3 +1,6 @@
+/**
+ @COPYRIGHT@
+ */
 package com.github.jspacal;
 
 public class SolarPositionAlgorithmSolverSolution {
@@ -172,6 +175,11 @@ public class SolarPositionAlgorithmSolverSolution {
     private double topocentricElevationAngleCorrected;
 
     /*
+     * equation of time [minutes]
+     */
+    private double equationOfTime;
+
+    /*
      * topocentric zenith angle [degrees]
      */
     private double topocentricZenithAngle;
@@ -205,11 +213,6 @@ public class SolarPositionAlgorithmSolverSolution {
      * local sun transit time (or solar noon) [fractional hour]
      */
     private Double localSunTransitTime;
-
-    /*
-     * equation of time [minutes]
-     */
-    private double equationOfTime;
 
     /*
      * sunrise hour angle [degrees]
