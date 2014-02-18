@@ -25,7 +25,7 @@ public class SolarPositionCalculator {
 	parameters.setHourOfDay(datetime.getHourOfDay());
 	parameters.setMinuteOfHour(datetime.getMinuteOfHour());
 	parameters.setSecondOfMinute(datetime.getSecondOfMinute());
-	parameters.setTimezone(0.0);//TODO
+	parameters.setTimezone(datetime.getZone().getOffset(null) / 3600000.0);
 	parameters.setLongitude(longitude);
 	parameters.setLatitude(latitude);
 	parameters.setAltitude(altitude);
