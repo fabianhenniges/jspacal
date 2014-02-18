@@ -3,6 +3,8 @@
  */
 package com.github.jspacal;
 
+import org.joda.time.DateTime;
+
 import com.github.jlog.Logger;
 
 public class SolarPositionAlgorithmParameters {
@@ -129,24 +131,14 @@ public class SolarPositionAlgorithmParameters {
     private static final double AZIMUTH_ROTATION_MAX = 360.0;
     private static final double AZIMUTH_ROTATION_DEFAULT = 0.0;
 
-    public SolarPositionAlgorithmParameters() {
-	this.slope = SLOPE_DEFAULT;
-	this.pressure = PRESSURE_DEFAULT;
-	this.temperature = TEMPERATURE_DEFAULT;
-	this.atmosphericRefraction = ATMOSPHERIC_REFRACTION_DEFAULT;
-	this.deltaT = DELTA_T_DEFAULT;
-	this.azimuthRotation = AZIMUTH_ROTATION_DEFAULT;
-    }
-
-    public SolarPositionAlgorithmParameters(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour,
-	    int second, double timezone, double longitude, double latitude, double altitude) {
-	this.year = year;
-	this.monthOfYear = monthOfYear;
-	this.dayOfMonth = dayOfMonth;
-	this.hourOfDay = hourOfDay;
-	this.minuteOfHour = minuteOfHour;
-	this.secondOfMinute = second;
-	this.timezone = timezone;
+    public SolarPositionAlgorithmParameters(DateTime datetime, double longitude, double latitude, double altitude) {
+	this.year = datetime.getYear();
+	this.monthOfYear = datetime.getMonthOfYear();
+	this.dayOfMonth = datetime.getDayOfMonth();
+	this.hourOfDay = datetime.getHourOfDay();
+	this.minuteOfHour = datetime.getMinuteOfHour();
+	this.secondOfMinute = datetime.getSecondOfMinute();
+	this.timezone = datetime.getZone().getOffset(null) / 3600000.0;
 	this.longitude = longitude;
 	this.latitude = latitude;
 	this.altitude = altitude;
@@ -287,7 +279,7 @@ public class SolarPositionAlgorithmParameters {
 	return azimuthRotation;
     }
 
-    public boolean isValid() {
+    public boolean areValid() {
 	if (year < YEAR_MIN || year > YEAR_MAX) {
 	    LOGGER.severe("[jspcal] {} is not valid year", year);
 	    return false;

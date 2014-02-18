@@ -4,6 +4,8 @@
 package com.github.jspacal;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 public class SolarPositionCalculator {
 
@@ -17,21 +19,103 @@ public class SolarPositionCalculator {
 	this.altitude = altitude;
     }
 
-    public double calculateSunTopocentricZenithAngle(DateTime datetime) {
-	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters();
-	parameters.setYear(datetime.getYear());
-	parameters.setMonthOfYear(datetime.getMonthOfYear());
-	parameters.setDayOfMonth(datetime.getDayOfMonth());
-	parameters.setHourOfDay(datetime.getHourOfDay());
-	parameters.setMinuteOfHour(datetime.getMinuteOfHour());
-	parameters.setSecondOfMinute(datetime.getSecondOfMinute());
-	parameters.setTimezone(datetime.getZone().getOffset(null) / 3600000.0);
-	parameters.setLongitude(longitude);
-	parameters.setLatitude(latitude);
-	parameters.setAltitude(altitude);
+    public Double calculateTopocentricZenithAngle(DateTime datetime) {
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
+		latitude, altitude);
 
-	SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
-	return solver.solve().getTopocentricZenithAngle();
+	if (parameters.areValid()) {
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+	    return solver.solve().getTopocentricZenithAngle();
+	}
+
+	return null;
+    }
+
+    public Double calculateTopocentricElevationAngle(DateTime datetime) {
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
+		latitude, altitude);
+
+	if (parameters.areValid()) {
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+	    return solver.solve().getTopocentricElevationAngleCorrected();
+	}
+
+	return null;
+    }
+
+    public Double calculateTopocentricAzimuthAngle(DateTime datetime) {
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
+		latitude, altitude);
+
+	if (parameters.areValid()) {
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+	    return solver.solve().getTopocentricAzimuthAngleEastwardFromNorth();
+	}
+
+	return null;
+    }
+
+    public Double calculateTopocentricAzmiuthAngleWestFromSouth(DateTime datetime) {
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
+		latitude, altitude);
+
+	if (parameters.areValid()) {
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+	    return solver.solve().getTopocentricAzimuthAngleWestwardFromSouth();
+	}
+
+	return null;
+    }
+
+    public Double calculateSurfaceIncidenceAngle(DateTime datetime) {
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
+		latitude, altitude);
+
+	if (parameters.areValid()) {
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+	    return solver.solve().getSurfaceIncidenceAngle();
+	}
+
+	return null;
+    }
+
+    public Double calculateLocalSunriseTime(LocalDate localDate) {
+	DateTime datetime = localDate.toDateTime(new LocalTime(12, 0, 0, 0));
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
+		latitude, altitude);
+
+	if (parameters.areValid()) {
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+	    return solver.solve().getLocalSunriseTime();
+	}
+
+	return null;
+    }
+
+    public Double calculateLocalSunsetTime(LocalDate localDate) {
+	DateTime datetime = localDate.toDateTime(new LocalTime(12, 0, 0, 0));
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
+		latitude, altitude);
+
+	if (parameters.areValid()) {
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+	    return solver.solve().getLocalSunsetTime();
+	}
+
+	return null;
+    }
+
+    public Double calculateLocalSuntransitTime(LocalDate localDate) {
+	DateTime datetime = localDate.toDateTime(new LocalTime(12, 0, 0, 0));
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
+		latitude, altitude);
+
+	if (parameters.areValid()) {
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+	    return solver.solve().getLocalSunTransitTime();
+	}
+
+	return null;
     }
 
 }
