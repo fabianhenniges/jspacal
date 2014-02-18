@@ -153,21 +153,26 @@ public class SolarPositionAlgorithmSolver {
 
 	double nutationLongitude = calculateNutationLongitude(julianEphemerisCentury, x);
 	solution.setNutationLongitude(nutationLongitude);
+
 	double nutationObliquity = calculateNutationOliquity(julianEphemerisCentury, x);
 	solution.setNutationObliquity(nutationObliquity);
 
 	double eclipticMeanObliquity = calculateEclipticMeanObliquity(julianEphemerisMillenium);
 	solution.setEclipticMeanObliquity(eclipticMeanObliquity);
+
 	double eclipticTrueObliquity = calculateEclipticTrueObliquity(nutationObliquity, eclipticMeanObliquity);
 	solution.setEclipticTrueobliquity(eclipticTrueObliquity);
 
 	double aberrationCorrection = calculateAberrationCorrection(earthRadiusVector);
 	solution.setAberrationCorrection(aberrationCorrection);
+
 	double apparentSunLongitude = calculateApparentSunLongitude(geocentricLongitude, nutationLongitude,
 		aberrationCorrection);
 	solution.setApparentSunLongitude(apparentSunLongitude);
+
 	double greenwichMeanSiderealTime = calculateGreenwichMeanSiderealTime(solution.getJulianDay(), julianCentury);
 	solution.setGreenwichMeanSiderealTime(greenwichMeanSiderealTime);
+
 	double greenwichSiderealTime = calculateGreenwichSiderealTime(greenwichMeanSiderealTime, nutationLongitude,
 		eclipticTrueObliquity);
 	solution.setGreenwichSiderealTime(greenwichSiderealTime);
@@ -175,6 +180,7 @@ public class SolarPositionAlgorithmSolver {
 	double geocentricSunRightAscension = calculateGeocentricSunRightAscension(apparentSunLongitude,
 		eclipticTrueObliquity, geocentricLatitude);
 	solution.setGeocentricSunRightAscension(geocentricSunRightAscension);
+
 	double geocentricSunDeclination = calculateGeocentricSunDeclination(apparentSunLongitude,
 		eclipticTrueObliquity, geocentricLatitude);
 	solution.setGeocentricSunDeclination(geocentricSunDeclination);
@@ -497,10 +503,8 @@ public class SolarPositionAlgorithmSolver {
     }
 
     private void calculateEoTAndSTS(SolarPositionAlgorithmSolverSolution solution) {
-	// double nu, h0, h0dfrac, n;
-
-	double[] a = new double[JD.values().length]; // alpha
-	double[] d = new double[JD.values().length]; // delta
+	double[] a = new double[JD.values().length];
+	double[] d = new double[JD.values().length];
 
 	double[] mRts = new double[SUN.values().length];
 	double[] nuRts = new double[SUN.values().length];
