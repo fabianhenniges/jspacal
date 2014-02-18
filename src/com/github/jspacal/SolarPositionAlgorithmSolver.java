@@ -144,7 +144,6 @@ public class SolarPositionAlgorithmSolver {
 	double ascendingLongitudeMoon = calculateAscendingLongitudeMoon(julianEphemerisCentury);
 	solution.setAscendingLongitudeMoon(ascendingLongitudeMoon);
 
-	//double[] x = new double[TERM_X.TERM_X_COUNT.ordinal()];
 	double[] x = new double[TERM_X.values().length];
 	x[TERM_X.TERM_X0.ordinal()] = meanElongationMoonSun;
 	x[TERM_X.TERM_X1.ordinal()] = meanAnomalySun;
@@ -500,16 +499,16 @@ public class SolarPositionAlgorithmSolver {
     private void calculateEoTAndSTS(SolarPositionAlgorithmSolverSolution solution) {
 	// double nu, h0, h0dfrac, n;
 
-	double[] a = new double[JD.JD_COUNT.ordinal()]; // alpha
-	double[] d = new double[JD.JD_COUNT.ordinal()]; // delta
+	double[] a = new double[JD.values().length]; // alpha
+	double[] d = new double[JD.values().length]; // delta
 
-	double[] mRts = new double[SUN.SUN_COUNT.ordinal()];
-	double[] nuRts = new double[SUN.SUN_COUNT.ordinal()];
-	double[] hRts = new double[SUN.SUN_COUNT.ordinal()];
+	double[] mRts = new double[SUN.values().length];
+	double[] nuRts = new double[SUN.values().length];
+	double[] hRts = new double[SUN.values().length];
 
-	double[] aPrime = new double[SUN.SUN_COUNT.ordinal()];
-	double[] dPrime = new double[SUN.SUN_COUNT.ordinal()];
-	double[] hPrime = new double[SUN.SUN_COUNT.ordinal()];
+	double[] aPrime = new double[SUN.values().length];
+	double[] dPrime = new double[SUN.values().length];
+	double[] hPrime = new double[SUN.values().length];
 
 	double h0prime = -1 * (SUN_RADIUS + parameters.getAtmosphericRefraction());
 
@@ -533,7 +532,7 @@ public class SolarPositionAlgorithmSolver {
 	sunRtsSolver.parameters.setDeltaT(0);
 	sunRtsSolverSolution.setJulianDay(solution.getJulianDay() - 1);
 
-	for (int i = 0; i < JD.JD_COUNT.ordinal(); i++) {
+	for (int i = 0; i < JD.values().length; i++) {
 	    sunRtsSolver.calculateGeocentricSunRightAscensionAndDeclination(sunRtsSolverSolution);
 	    a[i] = sunRtsSolverSolution.getGeocentricSunRightAscension();
 	    d[i] = sunRtsSolverSolution.getGeocentricSunDeclination();
@@ -547,16 +546,14 @@ public class SolarPositionAlgorithmSolver {
 
 	double h0dfrac;
 	if (h0 >= 0) {
-
-	    // approx_sun_rise_and_set(m_rts, h0);
-	    h0dfrac = h0 / 360.0;
+	    h0dfrac = h0 / 360.0; // approx_sun_rise_and_set(m_rts, h0);
 
 	    mRts[SUN.SUN_RISE.ordinal()] = limitZero2one(mRts[SUN.SUN_TRANSIT.ordinal()] - h0dfrac);
 	    mRts[SUN.SUN_SET.ordinal()] = limitZero2one(mRts[SUN.SUN_TRANSIT.ordinal()] + h0dfrac);
 	    mRts[SUN.SUN_TRANSIT.ordinal()] = limitZero2one(mRts[SUN.SUN_TRANSIT.ordinal()]);
 
 	    double n;
-	    for (int i = 0; i < SUN.SUN_COUNT.ordinal(); i++) {
+	    for (int i = 0; i < SUN.values().length; i++) {
 
 		nuRts[i] = sunRtsSolverSolution.getGreenwichSiderealTime() + 360.985647 * mRts[i];
 

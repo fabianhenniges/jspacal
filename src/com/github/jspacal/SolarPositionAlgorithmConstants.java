@@ -7,26 +7,26 @@ public class SolarPositionAlgorithmConstants {
     public static final double SUN_RADIUS = 0.26667;
 
     public static enum TERM {
-	TERM_A, TERM_B, TERM_C, TERM_COUNT
+	TERM_A, TERM_B, TERM_C
     }
 
     public static enum TERM_X {
-	TERM_X0, TERM_X1, TERM_X2, TERM_X3, TERM_X4, TERM_X_COUNT
+	TERM_X0, TERM_X1, TERM_X2, TERM_X3, TERM_X4
     }
 
     public static enum TERM_PSI {
-	TERM_PSI_A, TERM_PSI_B, TERM_EPS_C, TERM_EPS_D, TERM_PE_COUNT
+	TERM_PSI_A, TERM_PSI_B, TERM_EPS_C, TERM_EPS_D
     }
 
     public static enum JD {
-	JD_MINUS, JD_ZERO, JD_PLUS, JD_COUNT
+	JD_MINUS, JD_ZERO, JD_PLUS
     }
 
     public static enum SUN {
-	SUN_TRANSIT, SUN_RISE, SUN_SET, SUN_COUNT
+	SUN_TRANSIT, SUN_RISE, SUN_SET
     }
 
-    public static final int TERM_Y_COUNT = TERM_X.TERM_X_COUNT.ordinal();
+    public static final int TERM_Y_COUNT = TERM_X.values().length;
 
     public static final int[] L_SUBCOUNT = { 64, 34, 20, 7, 3, 1 };
     public static final int[] B_SUBCOUNT = { 5, 2 };
