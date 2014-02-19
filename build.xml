@@ -39,7 +39,8 @@
 	<!-- non test src files patternset -->
 	<patternset id='non.test.src.files.patternset'>
 		<include name='**/*.java'/>
-		<exclude name='**/*Test*.java'/>
+		<exclude name='**/*Test*'/>
+		<exclude name='**/*test*'/>
 	</patternset>
 
 	<!-- non test src files -->
