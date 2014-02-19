@@ -4,6 +4,8 @@
 package com.github.jspacal;
 
 public class SolarPositionAlgorithmConstants {
+    public static final String APPNAME = "jspcal";
+
     public static final double SUN_RADIUS = 0.26667;
 
     public static enum TERM {

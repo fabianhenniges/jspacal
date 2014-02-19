@@ -207,6 +207,16 @@ public class SolarPositionAlgorithmParameters {
 	return timezone;
     }
 
+    public void setDateTime(DateTime datetime) {
+	this.year = datetime.getYear();
+	this.monthOfYear = datetime.getMonthOfYear();
+	this.dayOfMonth = datetime.getDayOfMonth();
+	this.hourOfDay = datetime.getHourOfDay();
+	this.minuteOfHour = datetime.getMinuteOfHour();
+	this.secondOfMinute = datetime.getSecondOfMinute();
+	this.timezone = datetime.getZone().getOffset(null) / 3600000.0;
+    }
+
     public void setLongitude(double longitude) {
 	this.longitude = longitude;
     }
