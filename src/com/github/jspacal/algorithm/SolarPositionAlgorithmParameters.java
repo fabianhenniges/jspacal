@@ -1,61 +1,58 @@
 /**
  @COPYRIGHT@
  */
-package com.github.jspacal;
+package com.github.jspacal.algorithm;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
 
 import com.github.jlog.Logger;
 
 public class SolarPositionAlgorithmParameters {
     private static final Logger LOGGER = Logger.getLogger(SolarPositionAlgorithmParameters.class.getName());
 
+    private DateTime datetime;
+
     /*
      * 4-digit year
      */
-    private int year;
     private static final int YEAR_MIN = -2000;
     private static final int YEAR_MAX = 6000;
 
     /*
      * 2-digit monthOfYear
      */
-    private int monthOfYear;
     private static final int MONTH_OF_YEAR_MIN = 1;
     private static final int MONTH_OF_YEAR_MAX = 12;
 
     /*
      * 2-digit day of monthOfYear
      */
-    private int dayOfMonth;
     private static final int DAY_OF_MONTH_MIN = 1;
     private static final int DAY_OF_MONTH_MAX = 31;
 
     /*
      * observer local hour of day
      */
-    private int hourOfDay;
     private static final int HOUR_OF_DAY_MIN = 0;
     private static final int HOUR_OF_DAY_MAX = 24;
 
     /*
      * observer local minuteOfHour
      */
-    private int minuteOfHour;
     private static final int MINUTE_OF_HOUR_MIN = 0;
     private static final int MINUTE_OF_HOUR_MAX = 59;
 
     /*
      * observer local secondOfMinute
      */
-    private int secondOfMinute;
     private static final int SECOND_OF_MINUTE_MIN = 0;
     private static final int SECOND_OF_MINUTE_MAX = 59;
 
     /*
      * observer time zone (negative west of Greenwich)
      */
-    private double timezone;
     private static final double TIMEZONE_MIN = -18.0;
     private static final double TIMEZONE_MAX = 18.0;
 
@@ -132,13 +129,8 @@ public class SolarPositionAlgorithmParameters {
     private static final double AZIMUTH_ROTATION_DEFAULT = 0.0;
 
     public SolarPositionAlgorithmParameters(DateTime datetime, double longitude, double latitude, double altitude) {
-	this.year = datetime.getYear();
-	this.monthOfYear = datetime.getMonthOfYear();
-	this.dayOfMonth = datetime.getDayOfMonth();
-	this.hourOfDay = datetime.getHourOfDay();
-	this.minuteOfHour = datetime.getMinuteOfHour();
-	this.secondOfMinute = datetime.getSecondOfMinute();
-	this.timezone = datetime.getZone().getOffset(null) / 3600000.0;
+	this.datetime = datetime;
+
 	this.longitude = longitude;
 	this.latitude = latitude;
 	this.altitude = altitude;
@@ -151,70 +143,76 @@ public class SolarPositionAlgorithmParameters {
 	this.azimuthRotation = AZIMUTH_ROTATION_DEFAULT;
     }
 
-    public void setYear(int year) {
-	this.year = year;
+    public SolarPositionAlgorithmParameters(SolarPositionAlgorithmParameters source) {
+	this.datetime = source.datetime;
+
+	this.longitude = source.longitude;
+	this.latitude = source.latitude;
+	this.altitude = source.altitude;
+
+	this.slope = source.slope;
+	this.pressure = source.pressure;
+	this.temperature = source.temperature;
+	this.atmosphericRefraction = source.atmosphericRefraction;
+	this.deltaT = source.deltaT;
+	this.azimuthRotation = source.azimuthRotation;
     }
 
     public int getYear() {
-	return year;
-    }
-
-    public void setMonthOfYear(int monthOfYear) {
-	this.monthOfYear = monthOfYear;
+	return datetime.getYear();
     }
 
     public int getMonthOfYear() {
-	return monthOfYear;
-    }
-
-    public void setDayOfMonth(int dayOfMonth) {
-	this.dayOfMonth = dayOfMonth;
+	return datetime.getMonthOfYear();
     }
 
     public int getDayOfMonth() {
-	return dayOfMonth;
-    }
-
-    public void setHourOfDay(int hourOfDay) {
-	this.hourOfDay = hourOfDay;
+	return datetime.getDayOfMonth();
     }
 
     public int getHourOfDay() {
-	return hourOfDay;
+	return datetime.getHourOfDay();
     }
 
-    public void setMinuteOfHour(int minuteOfHour) {
-	this.minuteOfHour = minuteOfHour;
+    public void setHourOfDay(int hourOfDay) {
+	this.datetime = datetime.toLocalDate().toDateTime(
+		new LocalTime(hourOfDay, datetime.getMinuteOfHour(), datetime.getSecondOfMinute()));
     }
 
     public int getMinuteOfHour() {
-	return minuteOfHour;
+	return datetime.getMinuteOfHour();
     }
 
-    public void setSecondOfMinute(int secondOfMinute) {
-	this.secondOfMinute = secondOfMinute;
+    public void setMinuteOfHour(int minuteOfHour) {
+	this.datetime = datetime.toLocalDate().toDateTime(
+		new LocalTime(datetime.getHourOfDay(), minuteOfHour, datetime.getSecondOfMinute()));
     }
 
     public int getSecondOfMinute() {
-	return secondOfMinute;
+	return datetime.getSecondOfMinute();
     }
 
-    public void setTimezone(double timezone) {
-	this.timezone = timezone;
+    public void setSecondOfMinute(int secondOfMinute) {
+	this.datetime = datetime.toLocalDate().toDateTime(
+		new LocalTime(datetime.getHourOfDay(), datetime.getMinuteOfHour(), secondOfMinute));
     }
 
     public double getTimezone() {
-	return timezone;
+	return datetime.getZone().getOffset(null) / 3600000.0;
+    }
+
+    public void setTimezone(double timezone) {
+	this.datetime = datetime.toLocalDate().toDateTime(
+		new LocalTime(datetime.getHourOfDay(), datetime.getMinuteOfHour(), datetime.getSecondOfMinute()),
+		DateTimeZone.forOffsetHours((int) timezone));
     }
 
     public void setDateTime(DateTime datetime) {
-	this.year = datetime.getYear();
-	this.monthOfYear = datetime.getMonthOfYear();
-	this.dayOfMonth = datetime.getDayOfMonth();
-	this.hourOfDay = datetime.getHourOfDay();
-	this.minuteOfHour = datetime.getMinuteOfHour();
-	this.secondOfMinute = datetime.getSecondOfMinute();
-	this.timezone = datetime.getZone().getOffset(null) / 3600000.0;
+	this.datetime = datetime;
+    }
+
+    public DateTime getDatetime() {
+	return datetime;
     }
 
     public void setLongitude(double longitude) {
@@ -290,38 +288,39 @@ public class SolarPositionAlgorithmParameters {
     }
 
     public boolean areValid() {
-	if (year < YEAR_MIN || year > YEAR_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid year", year);
+	if (datetime.getYear() < YEAR_MIN || datetime.getYear() > YEAR_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid year", datetime.getYear());
 	    return false;
 	}
 
-	if (monthOfYear < MONTH_OF_YEAR_MIN || monthOfYear > MONTH_OF_YEAR_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid month of year", monthOfYear);
+	if (datetime.getMonthOfYear() < MONTH_OF_YEAR_MIN || datetime.getMonthOfYear() > MONTH_OF_YEAR_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid month of year", datetime.getMonthOfYear());
 	    return false;
 	}
 
-	if (dayOfMonth < DAY_OF_MONTH_MIN || dayOfMonth > DAY_OF_MONTH_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid day of month", dayOfMonth);
+	if (datetime.getDayOfMonth() < DAY_OF_MONTH_MIN || datetime.getDayOfMonth() > DAY_OF_MONTH_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid day of month", datetime.getDayOfMonth());
 	    return false;
 	}
 
-	if (hourOfDay < HOUR_OF_DAY_MIN || hourOfDay > HOUR_OF_DAY_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid hour of day", hourOfDay);
+	if (datetime.getHourOfDay() < HOUR_OF_DAY_MIN || datetime.getHourOfDay() > HOUR_OF_DAY_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid hour of day", datetime.getHourOfDay());
 	    return false;
 	}
 
-	if (minuteOfHour < MINUTE_OF_HOUR_MIN || minuteOfHour > MINUTE_OF_HOUR_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid minute of hour", minuteOfHour);
+	if (datetime.getMinuteOfHour() < MINUTE_OF_HOUR_MIN || datetime.getMinuteOfHour() > MINUTE_OF_HOUR_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid minute of hour", datetime.getMinuteOfHour());
 	    return false;
 	}
 
-	if (secondOfMinute < SECOND_OF_MINUTE_MIN || secondOfMinute > SECOND_OF_MINUTE_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid second of minute", secondOfMinute);
+	if (datetime.getSecondOfMinute() < SECOND_OF_MINUTE_MIN || datetime.getSecondOfMinute() > SECOND_OF_MINUTE_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid second of minute", datetime.getSecondOfMinute());
 	    return false;
 	}
 
-	if (timezone < TIMEZONE_MIN || timezone > TIMEZONE_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid timezone", timezone);
+	if (datetime.getZone().getOffset(null) / 3600000.0 < TIMEZONE_MIN
+		|| datetime.getZone().getOffset(null) / 3600000.0 > TIMEZONE_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid timezone", datetime.getZone().getOffset(null) / 3600000.0);
 	    return false;
 	}
 

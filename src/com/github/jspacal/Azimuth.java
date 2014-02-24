@@ -1,7 +1,24 @@
+/**
+ @COPYRIGHT@
+ */
 package com.github.jspacal;
 
-public interface Azimuth {
-    public double eastwardFromNorth();
+import com.github.jspacal.units.Angle;
 
-    public double westwardFromSouth();
+public class Azimuth {
+    private Angle westwardFromSouth;
+    private Angle eastwardFromNorth;
+
+    public Azimuth(Angle westwardFromSouth, Angle eastwardFromNorth) {
+	this.westwardFromSouth = westwardFromSouth;
+	this.eastwardFromNorth = eastwardFromNorth;
+    }
+
+    public Angle westwardFromSouth() {
+	return westwardFromSouth;
+    }
+
+    public Angle eastwardFromNorth() {
+	return eastwardFromNorth;
+    }
 }

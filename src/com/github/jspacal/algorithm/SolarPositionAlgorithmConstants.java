@@ -1,7 +1,7 @@
 /**
  @COPYRIGHT@
  */
-package com.github.jspacal;
+package com.github.jspacal.algorithm;
 
 public class SolarPositionAlgorithmConstants {
     public static final String APPNAME = "jspcal";

@@ -1,7 +1,7 @@
 /**
  @COPYRIGHT@
  */
-package com.github.jspacal;
+package com.github.jspacal.algorithm;
 
 public class SolarPositionAlgorithmSolverSolution {
     /*
@@ -202,32 +202,32 @@ public class SolarPositionAlgorithmSolverSolution {
     /*
      * local sunrise time (+/- 30 seconds) [fractional hour]
      */
-    private Double localSunriseTime;
+    private double localSunriseTime;
 
     /*
      * local sunset time (+/- 30 seconds) [fractional hour]
      */
-    private Double localSunsetTime;
+    private double localSunsetTime;
 
     /*
      * local sun transit time (or solar noon) [fractional hour]
      */
-    private Double localSunTransitTime;
+    private double localSunTransitTime;
 
     /*
      * sunrise hour angle [degrees]
      */
-    private Double sunriseHourAngle;
+    private double sunriseHourAngle;
 
     /*
      * sunset hour angle [degrees]
      */
-    private Double sunsetHourAngle;
+    private double sunsetHourAngle;
 
     /*
      * sun transit altitude [degrees]
      */
-    private Double sunTransitAltitude;
+    private double sunTransitAltitude;
 
     public SolarPositionAlgorithmSolverSolution() {
 

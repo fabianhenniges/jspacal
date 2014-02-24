@@ -1,9 +1,9 @@
 /**
  @COPYRIGHT@
  */
-package com.github.jspacal;
+package com.github.jspacal.algorithm;
 
-import static com.github.jspacal.SolarPositionAlgorithmConstants.*;
+import static com.github.jspacal.algorithm.SolarPositionAlgorithmConstants.*;
 
 public class SolarPositionAlgorithmSolver {
     private SolarPositionAlgorithmParameters parameters;
@@ -55,7 +55,7 @@ public class SolarPositionAlgorithmSolver {
 		topocentricElevationAngle, atmosphericRefractionCorrection);
 	solution.setTopocentricElevationAngleCorrected(topocentricElevationAngleCorrected);
 
-	calculateEoTAndSTS(solution);
+	calculateEquationOfTimeAndSunRiseTransitset(solution);
 
 	double topocentricZenithAngle = calculateTopocentricZenithAngle(topocentricElevationAngleCorrected);
 	solution.setTopocentricZenithAngle(topocentricZenithAngle);
@@ -502,13 +502,13 @@ public class SolarPositionAlgorithmSolver {
 				- parameters.getAzimuthRotation()))));
     }
 
-    private void calculateEoTAndSTS(SolarPositionAlgorithmSolverSolution solution) {
+    private void calculateEquationOfTimeAndSunRiseTransitset(SolarPositionAlgorithmSolverSolution solution) {
 	double[] a = new double[JD.values().length];
 	double[] d = new double[JD.values().length];
 
-	double[] mRts = new double[SUN.values().length];
-	double[] nuRts = new double[SUN.values().length];
-	double[] hRts = new double[SUN.values().length];
+	double[] mRTS = new double[SUN.values().length];
+	double[] nuRTS = new double[SUN.values().length];
+	double[] hRTS = new double[SUN.values().length];
 
 	double[] aPrime = new double[SUN.values().length];
 	double[] dPrime = new double[SUN.values().length];
@@ -521,63 +521,64 @@ public class SolarPositionAlgorithmSolver {
 		solution.getNutationLongitude(), solution.getEclipticTrueObliquity());
 	solution.setEquationOfTime(equationOfTime);
 
-	SolarPositionAlgorithmSolver sunRtsSolver = new SolarPositionAlgorithmSolver(parameters);
-	SolarPositionAlgorithmSolverSolution sunRtsSolverSolution = new SolarPositionAlgorithmSolverSolution(solution);
+	SolarPositionAlgorithmParameters sunRTSSolverParameters = new SolarPositionAlgorithmParameters(parameters);
+	SolarPositionAlgorithmSolver sunRTSSolver = new SolarPositionAlgorithmSolver(sunRTSSolverParameters);
+	SolarPositionAlgorithmSolverSolution sunRTSSolverSolution = new SolarPositionAlgorithmSolverSolution(solution);
 
-	sunRtsSolver.parameters.setHourOfDay(0);
-	sunRtsSolver.parameters.setMinuteOfHour(0);
-	sunRtsSolver.parameters.setSecondOfMinute(0);
-	sunRtsSolver.parameters.setTimezone(0.0);
+	sunRTSSolver.parameters.setHourOfDay(0);
+	sunRTSSolver.parameters.setMinuteOfHour(0);
+	sunRTSSolver.parameters.setSecondOfMinute(0);
+	sunRTSSolver.parameters.setTimezone(0.0);
 
-	double julianDay = sunRtsSolver.calculateJulianDay();
-	sunRtsSolverSolution.setJulianDay(julianDay);
-	sunRtsSolver.calculateGeocentricSunRightAscensionAndDeclination(sunRtsSolverSolution);
+	double julianDay = sunRTSSolver.calculateJulianDay();
+	sunRTSSolverSolution.setJulianDay(julianDay);
+	sunRTSSolver.calculateGeocentricSunRightAscensionAndDeclination(sunRTSSolverSolution);
 
-	sunRtsSolver.parameters.setDeltaT(0);
-	sunRtsSolverSolution.setJulianDay(solution.getJulianDay() - 1);
+	sunRTSSolver.parameters.setDeltaT(0);
+	sunRTSSolverSolution.setJulianDay(solution.getJulianDay() - 1);
 
 	for (int i = 0; i < JD.values().length; i++) {
-	    sunRtsSolver.calculateGeocentricSunRightAscensionAndDeclination(sunRtsSolverSolution);
-	    a[i] = sunRtsSolverSolution.getGeocentricSunRightAscension();
-	    d[i] = sunRtsSolverSolution.getGeocentricSunDeclination();
+	    sunRTSSolver.calculateGeocentricSunRightAscensionAndDeclination(sunRTSSolverSolution);
+	    a[i] = sunRTSSolverSolution.getGeocentricSunRightAscension();
+	    d[i] = sunRTSSolverSolution.getGeocentricSunDeclination();
 
-	    sunRtsSolverSolution.setJulianDay(sunRtsSolverSolution.getJulianDay() + 1);
+	    sunRTSSolverSolution.setJulianDay(sunRTSSolverSolution.getJulianDay() + 1);
 	}
 
-	mRts[SUN.SUN_TRANSIT.ordinal()] = calculateApproximateSunTransitTime(a[JD.JD_ZERO.ordinal()],
-		sunRtsSolverSolution.getGreenwichSiderealTime());
+	mRTS[SUN.SUN_TRANSIT.ordinal()] = calculateApproximateSunTransitTime(a[JD.JD_ZERO.ordinal()],
+		sunRTSSolverSolution.getGreenwichSiderealTime());
 	double h0 = calculateSunHourAngleAtRiseSet(d[JD.JD_ZERO.ordinal()], h0prime);
 
 	double h0dfrac;
 	if (h0 >= 0) {
 	    h0dfrac = h0 / 360.0; // approx_sun_rise_and_set(m_rts, h0);
 
-	    mRts[SUN.SUN_RISE.ordinal()] = limitZero2one(mRts[SUN.SUN_TRANSIT.ordinal()] - h0dfrac);
-	    mRts[SUN.SUN_SET.ordinal()] = limitZero2one(mRts[SUN.SUN_TRANSIT.ordinal()] + h0dfrac);
-	    mRts[SUN.SUN_TRANSIT.ordinal()] = limitZero2one(mRts[SUN.SUN_TRANSIT.ordinal()]);
+	    mRTS[SUN.SUN_RISE.ordinal()] = limitZero2one(mRTS[SUN.SUN_TRANSIT.ordinal()] - h0dfrac);
+	    mRTS[SUN.SUN_SET.ordinal()] = limitZero2one(mRTS[SUN.SUN_TRANSIT.ordinal()] + h0dfrac);
+	    mRTS[SUN.SUN_TRANSIT.ordinal()] = limitZero2one(mRTS[SUN.SUN_TRANSIT.ordinal()]);
 
 	    double n;
 	    for (int i = 0; i < SUN.values().length; i++) {
 
-		nuRts[i] = sunRtsSolverSolution.getGreenwichSiderealTime() + 360.985647 * mRts[i];
+		nuRTS[i] = sunRTSSolverSolution.getGreenwichSiderealTime() + 360.985647 * mRTS[i];
 
-		n = mRts[i] + parameters.getDeltaT() / 86400.0;
+		n = mRTS[i] + parameters.getDeltaT() / 86400.0;
 		aPrime[i] = calculateRtsAlphaDeltaPrime(a, n);
 		dPrime[i] = calculateRtsAlphaDeltaPrime(d, n);
 
-		hPrime[i] = limitDegrees180pm(nuRts[i] + parameters.getLongitude() - aPrime[i]);
+		hPrime[i] = limitDegrees180pm(nuRTS[i] + parameters.getLongitude() - aPrime[i]);
 
-		hRts[i] = calculateRtsSunAltitude(dPrime[i], hPrime[i]);
+		hRTS[i] = calculateRtsSunAltitude(dPrime[i], hPrime[i]);
 	    }
 
 	    solution.setSunriseHourAngle(hPrime[SUN.SUN_RISE.ordinal()]);
 	    solution.setSunsetHourAngle(hPrime[SUN.SUN_SET.ordinal()]);
-	    solution.setSunTransitAltitude(hRts[SUN.SUN_TRANSIT.ordinal()]);
-	    solution.setLocalSunTransitTime(dayFractionToLocalHour(mRts[SUN.SUN_TRANSIT.ordinal()]
+	    solution.setSunTransitAltitude(hRTS[SUN.SUN_TRANSIT.ordinal()]);
+	    solution.setLocalSunTransitTime(dayFractionToLocalHour(mRTS[SUN.SUN_TRANSIT.ordinal()]
 		    - hPrime[SUN.SUN_TRANSIT.ordinal()] / 360.0));
-	    solution.setLocalSunriseTime(dayFractionToLocalHour(calculateSunRiseAndSet(mRts, hRts, dPrime, hPrime,
+	    solution.setLocalSunriseTime(dayFractionToLocalHour(calculateSunRiseAndSet(mRTS, hRTS, dPrime, hPrime,
 		    h0prime, SUN.SUN_RISE.ordinal())));
-	    solution.setLocalSunsetTime(dayFractionToLocalHour(calculateSunRiseAndSet(mRts, hRts, dPrime, hPrime,
+	    solution.setLocalSunsetTime(dayFractionToLocalHour(calculateSunRiseAndSet(mRTS, hRTS, dPrime, hPrime,
 		    h0prime, SUN.SUN_SET.ordinal())));
 	} else {
 	    solution.setSunriseHourAngle(null);
