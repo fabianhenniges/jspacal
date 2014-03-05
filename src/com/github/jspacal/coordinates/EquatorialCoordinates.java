@@ -3,28 +3,28 @@
  */
 package com.github.jspacal.coordinates;
 
-import com.github.jspacal.units.Angle;
+import com.github.junits.angle.AngleValue;
 
 public class EquatorialCoordinates {
-    public Angle rightAscension;
-    public Angle hourAngle;
-    public Angle declination;
+    public AngleValue rightAscension;
+    public AngleValue hourAngle;
+    public AngleValue declination;
 
-    public EquatorialCoordinates(Angle rightAscension, Angle hourAngle, Angle declination) {
+    public EquatorialCoordinates(AngleValue rightAscension, AngleValue hourAngle, AngleValue declination) {
 	this.rightAscension = rightAscension;
 	this.hourAngle = hourAngle;
 	this.declination = declination;
     }
 
-    public Angle rightAscension() {
+    public AngleValue rightAscension() {
 	return rightAscension;
     }
 
-    public Angle hourAngle() {
+    public AngleValue hourAngle() {
 	return hourAngle;
     }
 
-    public Angle declination() {
+    public AngleValue declination() {
 	return declination;
     }
 

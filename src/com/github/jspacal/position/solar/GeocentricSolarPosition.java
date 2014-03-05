@@ -6,10 +6,10 @@ package com.github.jspacal.position.solar;
 import com.github.jspacal.algorithm.SolarPositionAlgorithmSolverSolution;
 import com.github.jspacal.coordinates.EclipticCoordinates;
 import com.github.jspacal.coordinates.EquatorialCoordinates;
-import com.github.jspacal.units.Angle;
-import com.github.jspacal.units.AngleUnit;
-import com.github.jspacal.units.Length;
-import com.github.jspacal.units.LengthUnit;
+import com.github.junits.angle.AngleUnit;
+import com.github.junits.angle.AngleValue;
+import com.github.junits.length.LengthUnit;
+import com.github.junits.length.LengthValue;
 
 public class GeocentricSolarPosition {
     private SolarPositionAlgorithmSolverSolution solution;
@@ -19,16 +19,16 @@ public class GeocentricSolarPosition {
     }
 
     public EclipticCoordinates inEclipticCoordinates() {
-	Angle longitude = new Angle(solution.getGeocentricLongitude(), AngleUnit.DEGREE);
-	Angle latitude = new Angle(solution.getGeocentricLatitude(), AngleUnit.DEGREE);
-	Length distance = new Length(solution.getEarthRadiusVector(), LengthUnit.AU);
+	AngleValue longitude = new AngleValue(solution.getGeocentricLongitude(), AngleUnit.DEGREE);
+	AngleValue latitude = new AngleValue(solution.getGeocentricLatitude(), AngleUnit.DEGREE);
+	LengthValue distance = new LengthValue(solution.getEarthRadiusVector(), LengthUnit.AU);
 	return new EclipticCoordinates(longitude, latitude, distance);
     }
 
     public EquatorialCoordinates inEquatorialCoordinates() {
-	Angle rightAscension = new Angle(solution.getGeocentricSunRightAscension(), AngleUnit.DEGREE);
-	Angle hourAngle = new Angle(solution.getObserverHourAngle(), AngleUnit.DEGREE);// TODO?
-	Angle declination = new Angle(solution.getGeocentricSunDeclination(), AngleUnit.DEGREE);
+	AngleValue rightAscension = new AngleValue(solution.getGeocentricSunRightAscension(), AngleUnit.DEGREE);
+	AngleValue hourAngle = new AngleValue(solution.getObserverHourAngle(), AngleUnit.DEGREE);// TODO?
+	AngleValue declination = new AngleValue(solution.getGeocentricSunDeclination(), AngleUnit.DEGREE);
 	return new EquatorialCoordinates(rightAscension, hourAngle, declination);
     }
 

@@ -1,7 +1,7 @@
 /**
  @COPYRIGHT@
  */
-package com.github.jspacal.time;
+package com.github.jspacal.solartime;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;

@@ -3,29 +3,29 @@
  */
 package com.github.jspacal.coordinates;
 
-import com.github.jspacal.units.Angle;
-import com.github.jspacal.units.Length;
+import com.github.junits.angle.AngleValue;
+import com.github.junits.length.LengthValue;
 
 public class EclipticCoordinates {
-    private Angle longitude;
-    public Angle latitude;
-    public Length distance;
+    private AngleValue longitude;
+    public AngleValue latitude;
+    public LengthValue distance;
 
-    public EclipticCoordinates(Angle longitude, Angle latitude, Length distance) {
+    public EclipticCoordinates(AngleValue longitude, AngleValue latitude, LengthValue distance) {
 	this.longitude = longitude;
 	this.latitude = latitude;
 	this.distance = distance;
     }
 
-    public Angle longitude() {
+    public AngleValue longitude() {
 	return longitude;
     }
 
-    public Angle latitude() {
+    public AngleValue latitude() {
 	return latitude;
     }
 
-    public Length distance() {
+    public LengthValue distance() {
 	return distance;
     }
 }

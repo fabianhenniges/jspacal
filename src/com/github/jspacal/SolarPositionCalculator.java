@@ -16,11 +16,11 @@ import com.github.jspacal.position.earth.EarthPosition;
 import com.github.jspacal.position.earth.EarthPositionSpecification;
 import com.github.jspacal.position.solar.SolarPosition;
 import com.github.jspacal.position.solar.SolarPositionSpecification;
-import com.github.jspacal.time.SolarTime;
-import com.github.jspacal.time.SolarTimeIndication;
-import com.github.jspacal.time.SolarTimeSpecification;
-import com.github.jspacal.units.Angle;
-import com.github.jspacal.units.AngleUnit;
+import com.github.jspacal.solartime.SolarTime;
+import com.github.jspacal.solartime.SolarTimeIndication;
+import com.github.jspacal.solartime.SolarTimeSpecification;
+import com.github.junits.angle.AngleUnit;
+import com.github.junits.angle.AngleValue;
 
 import static com.github.jspacal.algorithm.SolarPositionAlgorithmConstants.APPNAME;
 
@@ -134,7 +134,7 @@ public class SolarPositionCalculator {
 		DateTime datetime = localdate.toDateTime(new LocalTime(12, 0, 0, 0), DateTimeZone.UTC);
 		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
 			latitude, altitude);
-		
+
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
@@ -149,7 +149,7 @@ public class SolarPositionCalculator {
 	    public SolarTimeIndication forDateTime(DateTime datetime) {
 		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
 			latitude, altitude);
-		
+
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
@@ -163,13 +163,13 @@ public class SolarPositionCalculator {
 
     }
 
-    public Angle surfaceIncidenceAngle(DateTime datetime) {
+    public AngleValue surfaceIncidenceAngle(DateTime datetime) {
 	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
 		latitude, altitude);
 
 	if (parameters.areValid()) {
 	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
-	    return new Angle(solver.solve().getSurfaceIncidenceAngle(), AngleUnit.DEGREE);
+	    return new AngleValue(solver.solve().getSurfaceIncidenceAngle(), AngleUnit.DEGREE);
 	}
 
 	return null;

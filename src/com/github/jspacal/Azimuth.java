@@ -3,22 +3,22 @@
  */
 package com.github.jspacal;
 
-import com.github.jspacal.units.Angle;
+import com.github.junits.angle.AngleValue;
 
 public class Azimuth {
-    private Angle westwardFromSouth;
-    private Angle eastwardFromNorth;
+    private AngleValue westwardFromSouth;
+    private AngleValue eastwardFromNorth;
 
-    public Azimuth(Angle westwardFromSouth, Angle eastwardFromNorth) {
+    public Azimuth(AngleValue westwardFromSouth, AngleValue eastwardFromNorth) {
 	this.westwardFromSouth = westwardFromSouth;
 	this.eastwardFromNorth = eastwardFromNorth;
     }
 
-    public Angle westwardFromSouth() {
+    public AngleValue westwardFromSouth() {
 	return westwardFromSouth;
     }
 
-    public Angle eastwardFromNorth() {
+    public AngleValue eastwardFromNorth() {
 	return eastwardFromNorth;
     }
 }

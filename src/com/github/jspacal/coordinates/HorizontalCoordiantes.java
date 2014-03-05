@@ -4,24 +4,24 @@
 package com.github.jspacal.coordinates;
 
 import com.github.jspacal.Azimuth;
-import com.github.jspacal.units.Angle;
+import com.github.junits.angle.AngleValue;
 
 public class HorizontalCoordiantes {
-    private Angle altitude;
-    private Angle zenith;
+    private AngleValue altitude;
+    private AngleValue zenith;
     private Azimuth azimuth;
 
-    public HorizontalCoordiantes(Angle altitude, Angle zenith, Azimuth azimuth) {
+    public HorizontalCoordiantes(AngleValue altitude, AngleValue zenith, Azimuth azimuth) {
 	this.altitude = altitude;
 	this.zenith = zenith;
 	this.azimuth = azimuth;
     }
 
-    public Angle altitude() {
+    public AngleValue altitude() {
 	return altitude;
     }
 
-    public Angle zenith() {
+    public AngleValue zenith() {
 	return zenith;
     }
 
