@@ -4,7 +4,7 @@
 package com.github.jspacal.algorithm;
 
 public class SolarPositionAlgorithmConstants {
-    public static final String APPNAME = "jspcal";
+    public static final String APPNAME = "jspacal";
 
     public static final double SUN_RADIUS = 0.26667;
 

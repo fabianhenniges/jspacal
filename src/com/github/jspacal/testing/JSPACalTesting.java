@@ -7,11 +7,18 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import com.github.jspacal.SolarPositionCalculator;
+import com.github.junits.angle.AngleUnit;
+import com.github.junits.angle.AngleValue;
+import com.github.junits.length.LengthUnit;
+import com.github.junits.length.LengthValue;
 
 public class JSPACalTesting {
 
     public static void main(String[] args) {
-	SolarPositionCalculator solarCalculator = new SolarPositionCalculator(-105.178, 39.743, 1829);
+	AngleValue longitude = new AngleValue(-105.178, AngleUnit.DEGREE);
+	AngleValue latitude = new AngleValue(39.743, AngleUnit.DEGREE);
+	LengthValue altitude = new LengthValue(1829, LengthUnit.METER);
+	SolarPositionCalculator solarCalculator = new SolarPositionCalculator(longitude, latitude, altitude);
 	DateTime datetime = new DateTime(2014, 2, 21, 10, 0, 0, DateTimeZone.UTC);
 
 	System.out.println("Topocentric zenith angle: "

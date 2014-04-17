@@ -21,17 +21,18 @@ import com.github.jspacal.solartime.SolarTimeIndication;
 import com.github.jspacal.solartime.SolarTimeSpecification;
 import com.github.junits.angle.AngleUnit;
 import com.github.junits.angle.AngleValue;
+import com.github.junits.length.LengthValue;
 
 import static com.github.jspacal.algorithm.SolarPositionAlgorithmConstants.APPNAME;
 
 public class SolarPositionCalculator {
     private static final Logger LOGGER = Logger.getLogger(SolarPositionCalculator.class.getName());
 
-    private double longitude;
-    private double latitude;
-    private double altitude;
+    private AngleValue longitude;
+    private AngleValue latitude;
+    private LengthValue altitude;
 
-    public SolarPositionCalculator(double longitude, double latitude, double altitude) {
+    public SolarPositionCalculator(AngleValue longitude, AngleValue latitude, LengthValue altitude) {
 	this.longitude = longitude;
 	this.latitude = latitude;
 	this.altitude = altitude;
@@ -43,8 +44,8 @@ public class SolarPositionCalculator {
 
 	    @Override
 	    public EarthPosition forDateTime(DateTime datetime) {
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
-			latitude, altitude);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
+			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
@@ -61,8 +62,8 @@ public class SolarPositionCalculator {
 
 	    @Override
 	    public SolarPosition forDateTime(DateTime datetime) {
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
-			latitude, altitude);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
+			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
@@ -74,8 +75,8 @@ public class SolarPositionCalculator {
 	    @Override
 	    public SolarPosition atSunset(LocalDate localdate) {
 		DateTime datetime = localdate.toDateTime(new LocalTime(), DateTimeZone.UTC);
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
-			latitude, altitude);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
+			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
 
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
@@ -100,8 +101,8 @@ public class SolarPositionCalculator {
 	    @Override
 	    public SolarPosition atSunrise(LocalDate localdate) {
 		DateTime datetime = localdate.toDateTime(new LocalTime(), DateTimeZone.UTC);
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
-			latitude, altitude);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
+			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
 
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
@@ -132,8 +133,8 @@ public class SolarPositionCalculator {
 	    @Override
 	    public SolarTimeIndication forLocalDate(LocalDate localdate) {
 		DateTime datetime = localdate.toDateTime(new LocalTime(12, 0, 0, 0), DateTimeZone.UTC);
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
-			latitude, altitude);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
+			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
 
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
@@ -147,8 +148,8 @@ public class SolarPositionCalculator {
 
 	    @Override
 	    public SolarTimeIndication forDateTime(DateTime datetime) {
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
-			latitude, altitude);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
+			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
 
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
@@ -164,8 +165,8 @@ public class SolarPositionCalculator {
     }
 
     public AngleValue surfaceIncidenceAngle(DateTime datetime) {
-	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime, longitude,
-		latitude, altitude);
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
+		longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
 
 	if (parameters.areValid()) {
 	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
