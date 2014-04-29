@@ -15,11 +15,11 @@ import com.github.junits.length.LengthValue;
 public class JSPACalTesting {
 
     public static void main(String[] args) {
-	AngleValue longitude = new AngleValue(-105.178, AngleUnit.DEGREE);
-	AngleValue latitude = new AngleValue(39.743, AngleUnit.DEGREE);
-	LengthValue altitude = new LengthValue(1829, LengthUnit.METER);
+	AngleValue longitude = new AngleValue(18.45631, AngleUnit.DEGREE);
+	AngleValue latitude = new AngleValue(54.384251, AngleUnit.DEGREE);
+	LengthValue altitude = new LengthValue(36.0, LengthUnit.METER);
 	SolarPositionCalculator solarCalculator = new SolarPositionCalculator(longitude, latitude, altitude);
-	DateTime datetime = new DateTime(2014, 2, 21, 10, 0, 0, DateTimeZone.UTC);
+	DateTime datetime = new DateTime(2009, 6, 30, 19, 0, 0, DateTimeZone.UTC);
 
 	System.out.println("Topocentric zenith angle: "
 		+ solarCalculator.getSolarPosition().forDateTime(datetime).topocentric().inHorizontalCoordiantes()
@@ -34,13 +34,18 @@ public class JSPACalTesting {
 		+ solarCalculator.getSolarPosition().forDateTime(datetime).topocentric().inHorizontalCoordiantes()
 			.azimuth().westwardFromSouth());
 	System.out.println("Surface incidence angle: " + solarCalculator.surfaceIncidenceAngle(datetime));
+
 	System.out.println("Local sunrise time (+/- 30 seconds) [fractional hour]: "
 		+ solarCalculator.getLocalSolarTime().forLocalDate(datetime.toLocalDate()).sunriseTime()
 			.asFractionalHourOfDay());
+	System.out.println("Local sunrise time (+/- 30 seconds) [datetime]: "
+		+ solarCalculator.getLocalSolarTime().forLocalDate(datetime.toLocalDate()).sunriseTime().asDateTime());
 	System.out.println("Local sun transit time (or solar noon): "
 		+ solarCalculator.getLocalSolarTime().forDateTime(datetime).suntransitTime().asFractionalHourOfDay());
-	System.out.println("Local sunset time (+/- 30 seconds): "
+	System.out.println("Local sunset time (+/- 30 seconds) [fractional hour]: "
 		+ solarCalculator.getLocalSolarTime().forDateTime(datetime).sunsetTime().asFractionalHourOfDay());
+	System.out.println("Local sunset time (+/- 30 seconds) [datetime]: "
+		+ solarCalculator.getLocalSolarTime().forDateTime(datetime).sunsetTime().asDateTime());
 
 	System.out.println("Topocentric sunrise altitude: "
 		+ solarCalculator.getSolarPosition().atSunrise(datetime.toLocalDate()).topocentric()
