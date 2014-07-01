@@ -108,7 +108,7 @@
 			<manifest>
 				<attribute name='Created-By' value='${author}'/>
 				<section name='${ant.project.name}'>
-					<attribute name='Specification-Title' value='Java logging library'/>
+					<attribute name='Specification-Title' value='Java Solar Position Algorithm CALculator tool'/>
 					<attribute name='Specification-Version' value='${version}'/>
 					<attribute name='Specification-Vendor' value='${author}'/>
 					<attribute name='Implementation-Title' value='...'/>

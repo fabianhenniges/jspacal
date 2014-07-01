@@ -1,10 +1,10 @@
 *.class
 *.classpath
 *.project
+*.properties
 /.settings
 
 # Package Files #
-*.war
-*.ear
-/bin
-/build
+bin/
+build/
+dist/
