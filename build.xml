@@ -90,7 +90,7 @@
 		<javac srcdir='${dist.prep.dir}/src' destdir='${build.dir}' includeantruntime='false'>
 			<patternset refid='non.test.src.files.patternset'/>
 			<classpath>
-				<fileset dir='${dist.prep.dir}/lib' includes='**/*.jar'/>
+				<fileset dir='${lib.dir}' includes='**/*.jar'/>
 			</classpath>
 		</javac>
 
