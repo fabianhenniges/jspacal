@@ -11,7 +11,8 @@ public class HorizontalCoordiantes {
     private AngleValue zenith;
     private Azimuth azimuth;
 
-    public HorizontalCoordiantes(AngleValue altitude, AngleValue zenith, Azimuth azimuth) {
+    public HorizontalCoordiantes(AngleValue altitude, AngleValue zenith,
+	    Azimuth azimuth) {
 	this.altitude = altitude;
 	this.zenith = zenith;
 	this.azimuth = azimuth;

@@ -11,7 +11,8 @@ public class SolarTimeIndication {
     private LocalDate localdate;
     private SolarPositionAlgorithmSolverSolution solution;
 
-    public SolarTimeIndication(LocalDate localdate, SolarPositionAlgorithmSolverSolution solution) {
+    public SolarTimeIndication(LocalDate localdate,
+	    SolarPositionAlgorithmSolverSolution solution) {
 	this.localdate = localdate;
 	this.solution = solution;
     }

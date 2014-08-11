@@ -10,7 +10,8 @@ import org.joda.time.LocalTime;
 import com.github.jlog.Logger;
 
 public class SolarPositionAlgorithmParameters {
-    private static final Logger LOGGER = Logger.getLogger(SolarPositionAlgorithmParameters.class.getName());
+    private static final Logger LOGGER = Logger
+	    .getLogger(SolarPositionAlgorithmParameters.class.getName());
 
     private DateTime datetime;
 
@@ -128,7 +129,8 @@ public class SolarPositionAlgorithmParameters {
     private static final double AZIMUTH_ROTATION_MAX = 360.0;
     private static final double AZIMUTH_ROTATION_DEFAULT = 0.0;
 
-    public SolarPositionAlgorithmParameters(DateTime datetime, double longitude, double latitude, double altitude) {
+    public SolarPositionAlgorithmParameters(DateTime datetime,
+	    double longitude, double latitude, double altitude) {
 	this.datetime = datetime;
 
 	this.longitude = longitude;
@@ -143,7 +145,8 @@ public class SolarPositionAlgorithmParameters {
 	this.azimuthRotation = AZIMUTH_ROTATION_DEFAULT;
     }
 
-    public SolarPositionAlgorithmParameters(SolarPositionAlgorithmParameters source) {
+    public SolarPositionAlgorithmParameters(
+	    SolarPositionAlgorithmParameters source) {
 	this.datetime = source.datetime;
 
 	this.longitude = source.longitude;
@@ -176,7 +179,8 @@ public class SolarPositionAlgorithmParameters {
 
     public void setHourOfDay(int hourOfDay) {
 	this.datetime = datetime.toLocalDate().toDateTime(
-		new LocalTime(hourOfDay, datetime.getMinuteOfHour(), datetime.getSecondOfMinute()));
+		new LocalTime(hourOfDay, datetime.getMinuteOfHour(), datetime
+			.getSecondOfMinute()));
     }
 
     public int getMinuteOfHour() {
@@ -185,7 +189,8 @@ public class SolarPositionAlgorithmParameters {
 
     public void setMinuteOfHour(int minuteOfHour) {
 	this.datetime = datetime.toLocalDate().toDateTime(
-		new LocalTime(datetime.getHourOfDay(), minuteOfHour, datetime.getSecondOfMinute()));
+		new LocalTime(datetime.getHourOfDay(), minuteOfHour, datetime
+			.getSecondOfMinute()));
     }
 
     public int getSecondOfMinute() {
@@ -194,7 +199,8 @@ public class SolarPositionAlgorithmParameters {
 
     public void setSecondOfMinute(int secondOfMinute) {
 	this.datetime = datetime.toLocalDate().toDateTime(
-		new LocalTime(datetime.getHourOfDay(), datetime.getMinuteOfHour(), secondOfMinute));
+		new LocalTime(datetime.getHourOfDay(), datetime
+			.getMinuteOfHour(), secondOfMinute));
     }
 
     public double getTimezone() {
@@ -203,7 +209,9 @@ public class SolarPositionAlgorithmParameters {
 
     public void setTimezone(double timezone) {
 	this.datetime = datetime.toLocalDate().toDateTime(
-		new LocalTime(datetime.getHourOfDay(), datetime.getMinuteOfHour(), datetime.getSecondOfMinute()),
+		new LocalTime(datetime.getHourOfDay(),
+			datetime.getMinuteOfHour(),
+			datetime.getSecondOfMinute()),
 		DateTimeZone.forOffsetHours((int) timezone));
     }
 
@@ -293,34 +301,45 @@ public class SolarPositionAlgorithmParameters {
 	    return false;
 	}
 
-	if (datetime.getMonthOfYear() < MONTH_OF_YEAR_MIN || datetime.getMonthOfYear() > MONTH_OF_YEAR_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid month of year", datetime.getMonthOfYear());
+	if (datetime.getMonthOfYear() < MONTH_OF_YEAR_MIN
+		|| datetime.getMonthOfYear() > MONTH_OF_YEAR_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid month of year",
+		    datetime.getMonthOfYear());
 	    return false;
 	}
 
-	if (datetime.getDayOfMonth() < DAY_OF_MONTH_MIN || datetime.getDayOfMonth() > DAY_OF_MONTH_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid day of month", datetime.getDayOfMonth());
+	if (datetime.getDayOfMonth() < DAY_OF_MONTH_MIN
+		|| datetime.getDayOfMonth() > DAY_OF_MONTH_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid day of month",
+		    datetime.getDayOfMonth());
 	    return false;
 	}
 
-	if (datetime.getHourOfDay() < HOUR_OF_DAY_MIN || datetime.getHourOfDay() > HOUR_OF_DAY_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid hour of day", datetime.getHourOfDay());
+	if (datetime.getHourOfDay() < HOUR_OF_DAY_MIN
+		|| datetime.getHourOfDay() > HOUR_OF_DAY_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid hour of day",
+		    datetime.getHourOfDay());
 	    return false;
 	}
 
-	if (datetime.getMinuteOfHour() < MINUTE_OF_HOUR_MIN || datetime.getMinuteOfHour() > MINUTE_OF_HOUR_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid minute of hour", datetime.getMinuteOfHour());
+	if (datetime.getMinuteOfHour() < MINUTE_OF_HOUR_MIN
+		|| datetime.getMinuteOfHour() > MINUTE_OF_HOUR_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid minute of hour",
+		    datetime.getMinuteOfHour());
 	    return false;
 	}
 
-	if (datetime.getSecondOfMinute() < SECOND_OF_MINUTE_MIN || datetime.getSecondOfMinute() > SECOND_OF_MINUTE_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid second of minute", datetime.getSecondOfMinute());
+	if (datetime.getSecondOfMinute() < SECOND_OF_MINUTE_MIN
+		|| datetime.getSecondOfMinute() > SECOND_OF_MINUTE_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid second of minute",
+		    datetime.getSecondOfMinute());
 	    return false;
 	}
 
 	if (datetime.getZone().getOffset(null) / 3600000.0 < TIMEZONE_MIN
 		|| datetime.getZone().getOffset(null) / 3600000.0 > TIMEZONE_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid timezone", datetime.getZone().getOffset(null) / 3600000.0);
+	    LOGGER.severe("[jspcal] {} is not valid timezone", datetime
+		    .getZone().getOffset(null) / 3600000.0);
 	    return false;
 	}
 
@@ -354,8 +373,10 @@ public class SolarPositionAlgorithmParameters {
 	    return false;
 	}
 
-	if (atmosphericRefraction < ATMOSPHERIC_REFRACTION_MIN || atmosphericRefraction > ATMOSPHERIC_REFRACTION_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid atmospheric refraction", atmosphericRefraction);
+	if (atmosphericRefraction < ATMOSPHERIC_REFRACTION_MIN
+		|| atmosphericRefraction > ATMOSPHERIC_REFRACTION_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid atmospheric refraction",
+		    atmosphericRefraction);
 	    return false;
 	}
 
@@ -364,8 +385,10 @@ public class SolarPositionAlgorithmParameters {
 	    return false;
 	}
 
-	if (azimuthRotation < AZIMUTH_ROTATION_MIN || azimuthRotation > AZIMUTH_ROTATION_MAX) {
-	    LOGGER.severe("[jspcal] {} is not valid azimuth rotation", azimuthRotation);
+	if (azimuthRotation < AZIMUTH_ROTATION_MIN
+		|| azimuthRotation > AZIMUTH_ROTATION_MAX) {
+	    LOGGER.severe("[jspcal] {} is not valid azimuth rotation",
+		    azimuthRotation);
 	    return false;
 	}
 

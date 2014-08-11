@@ -11,7 +11,8 @@ public class EclipticCoordinates {
     public AngleValue latitude;
     public LengthValue distance;
 
-    public EclipticCoordinates(AngleValue longitude, AngleValue latitude, LengthValue distance) {
+    public EclipticCoordinates(AngleValue longitude, AngleValue latitude,
+	    LengthValue distance) {
 	this.longitude = longitude;
 	this.latitude = latitude;
 	this.distance = distance;

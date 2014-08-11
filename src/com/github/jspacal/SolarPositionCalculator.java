@@ -26,13 +26,15 @@ import com.github.junits.length.LengthValue;
 import static com.github.jspacal.algorithm.SolarPositionAlgorithmConstants.APPNAME;
 
 public class SolarPositionCalculator {
-    private static final Logger LOGGER = Logger.getLogger(SolarPositionCalculator.class.getName());
+    private static final Logger LOGGER = Logger
+	    .getLogger(SolarPositionCalculator.class.getName());
 
     private AngleValue longitude;
     private AngleValue latitude;
     private LengthValue altitude;
 
-    public SolarPositionCalculator(AngleValue longitude, AngleValue latitude, LengthValue altitude) {
+    public SolarPositionCalculator(AngleValue longitude, AngleValue latitude,
+	    LengthValue altitude) {
 	this.longitude = longitude;
 	this.latitude = latitude;
 	this.altitude = altitude;
@@ -44,14 +46,16 @@ public class SolarPositionCalculator {
 
 	    @Override
 	    public EarthPosition forDateTime(DateTime datetime) {
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
-			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(
+			datetime, longitude.inDegrees(), latitude.inDegrees(),
+			altitude.inMeters());
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
-		return new EarthPosition(new SolarPositionAlgorithmSolver(parameters).solve());
+		return new EarthPosition(new SolarPositionAlgorithmSolver(
+			parameters).solve());
 	    }
 	};
     }
@@ -62,35 +66,42 @@ public class SolarPositionCalculator {
 
 	    @Override
 	    public SolarPosition forDateTime(DateTime datetime) {
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
-			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(
+			datetime, longitude.inDegrees(), latitude.inDegrees(),
+			altitude.inMeters());
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
-		return new SolarPosition(new SolarPositionAlgorithmSolver(parameters).solve());
+		return new SolarPosition(new SolarPositionAlgorithmSolver(
+			parameters).solve());
 	    }
 
 	    @Override
 	    public SolarPosition atSunset(LocalDate localdate) {
-		DateTime datetime = localdate.toDateTime(new LocalTime(), DateTimeZone.UTC);
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
-			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
+		DateTime datetime = localdate.toDateTime(new LocalTime(),
+			DateTimeZone.UTC);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(
+			datetime, longitude.inDegrees(), latitude.inDegrees(),
+			altitude.inMeters());
 
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
-		SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+		SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(
+			parameters);
 		SolarPositionAlgorithmSolverSolution solution = solver.solve();
-		DateTime noon = new SolarTime(localdate, solution.getLocalSunTransitTime()).asDateTime();
+		DateTime noon = new SolarTime(localdate,
+			solution.getLocalSunTransitTime()).asDateTime();
 		parameters.setDateTime(noon);
 		solution = solver.solve();
 
 		while (solution.getTopocentricElevationAngleCorrected() > 0.0) {
-		    DateTime currentDateTime = parameters.getDatetime().plusMinutes(1);
+		    DateTime currentDateTime = parameters.getDatetime()
+			    .plusMinutes(1);
 		    parameters.setDateTime(currentDateTime);
 		    solution = solver.solve();
 		}
@@ -100,23 +111,28 @@ public class SolarPositionCalculator {
 
 	    @Override
 	    public SolarPosition atSunrise(LocalDate localdate) {
-		DateTime datetime = localdate.toDateTime(new LocalTime(), DateTimeZone.UTC);
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
-			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
+		DateTime datetime = localdate.toDateTime(new LocalTime(),
+			DateTimeZone.UTC);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(
+			datetime, longitude.inDegrees(), latitude.inDegrees(),
+			altitude.inMeters());
 
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
-		SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
+		SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(
+			parameters);
 		SolarPositionAlgorithmSolverSolution solution = solver.solve();
-		DateTime noon = new SolarTime(localdate, solution.getLocalSunTransitTime()).asDateTime();
+		DateTime noon = new SolarTime(localdate,
+			solution.getLocalSunTransitTime()).asDateTime();
 		parameters.setDateTime(noon);
 		solution = solver.solve();
 
 		while (solution.getTopocentricElevationAngleCorrected() > 0.0) {
-		    DateTime currentDateTime = parameters.getDatetime().minusMinutes(1);
+		    DateTime currentDateTime = parameters.getDatetime()
+			    .minusMinutes(1);
 		    parameters.setDateTime(currentDateTime);
 		    solution = solver.solve();
 		}
@@ -132,31 +148,36 @@ public class SolarPositionCalculator {
 
 	    @Override
 	    public SolarTimeIndication forLocalDate(LocalDate localdate) {
-		DateTime datetime = localdate.toDateTime(new LocalTime(12, 0, 0, 0), DateTimeZone.UTC);
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
-			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
+		DateTime datetime = localdate.toDateTime(new LocalTime(0, 0, 0,
+			1), DateTimeZone.UTC);
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(
+			datetime, longitude.inDegrees(), latitude.inDegrees(),
+			altitude.inMeters());
 
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
-		SolarPositionAlgorithmSolverSolution solution = new SolarPositionAlgorithmSolver(parameters).solve();
+		SolarPositionAlgorithmSolverSolution solution = new SolarPositionAlgorithmSolver(
+			parameters).solve();
 
 		return new SolarTimeIndication(localdate, solution);
 	    }
 
 	    @Override
 	    public SolarTimeIndication forDateTime(DateTime datetime) {
-		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
-			longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
+		SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(
+			datetime, longitude.inDegrees(), latitude.inDegrees(),
+			altitude.inMeters());
 
 		if (!parameters.areValid()) {
 		    LOGGER.severe("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
-		SolarPositionAlgorithmSolverSolution solution = new SolarPositionAlgorithmSolver(parameters).solve();
+		SolarPositionAlgorithmSolverSolution solution = new SolarPositionAlgorithmSolver(
+			parameters).solve();
 
 		return new SolarTimeIndication(datetime.toLocalDate(), solution);
 	    }
@@ -165,12 +186,15 @@ public class SolarPositionCalculator {
     }
 
     public AngleValue surfaceIncidenceAngle(DateTime datetime) {
-	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(datetime,
-		longitude.inDegrees(), latitude.inDegrees(), altitude.inMeters());
+	SolarPositionAlgorithmParameters parameters = new SolarPositionAlgorithmParameters(
+		datetime, longitude.inDegrees(), latitude.inDegrees(),
+		altitude.inMeters());
 
 	if (parameters.areValid()) {
-	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(parameters);
-	    return new AngleValue(solver.solve().getSurfaceIncidenceAngle(), AngleUnit.DEGREE);
+	    SolarPositionAlgorithmSolver solver = new SolarPositionAlgorithmSolver(
+		    parameters);
+	    return new AngleValue(solver.solve().getSurfaceIncidenceAngle(),
+		    AngleUnit.DEGREE);
 	}
 
 	return null;

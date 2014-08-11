@@ -19,16 +19,22 @@ public class GeocentricSolarPosition {
     }
 
     public EclipticCoordinates inEclipticCoordinates() {
-	AngleValue longitude = new AngleValue(solution.getGeocentricLongitude(), AngleUnit.DEGREE);
-	AngleValue latitude = new AngleValue(solution.getGeocentricLatitude(), AngleUnit.DEGREE);
-	LengthValue distance = new LengthValue(solution.getEarthRadiusVector(), LengthUnit.AU);
+	AngleValue longitude = new AngleValue(
+		solution.getGeocentricLongitude(), AngleUnit.DEGREE);
+	AngleValue latitude = new AngleValue(solution.getGeocentricLatitude(),
+		AngleUnit.DEGREE);
+	LengthValue distance = new LengthValue(solution.getEarthRadiusVector(),
+		LengthUnit.AU);
 	return new EclipticCoordinates(longitude, latitude, distance);
     }
 
     public EquatorialCoordinates inEquatorialCoordinates() {
-	AngleValue rightAscension = new AngleValue(solution.getGeocentricSunRightAscension(), AngleUnit.DEGREE);
-	AngleValue hourAngle = new AngleValue(solution.getObserverHourAngle(), AngleUnit.DEGREE);// TODO?
-	AngleValue declination = new AngleValue(solution.getGeocentricSunDeclination(), AngleUnit.DEGREE);
+	AngleValue rightAscension = new AngleValue(
+		solution.getGeocentricSunRightAscension(), AngleUnit.DEGREE);
+	AngleValue hourAngle = new AngleValue(solution.getObserverHourAngle(),
+		AngleUnit.DEGREE);// TODO?
+	AngleValue declination = new AngleValue(
+		solution.getGeocentricSunDeclination(), AngleUnit.DEGREE);
 	return new EquatorialCoordinates(rightAscension, hourAngle, declination);
     }
 

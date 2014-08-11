@@ -21,7 +21,8 @@ public class SolarTime {
 	int hourOfDay = (int) fractionalHourOfDay;
 	int minuteOfHour = (int) ((fractionalHourOfDay - hourOfDay) * 60);
 	int secondOfMinute = (int) (((fractionalHourOfDay - hourOfDay) * 60 - minuteOfHour) * 60);
-	return localdate.toDateTime(new LocalTime(hourOfDay, minuteOfHour, secondOfMinute), DateTimeZone.UTC);
+	return localdate.toDateTime(new LocalTime(hourOfDay, minuteOfHour,
+		secondOfMinute), DateTimeZone.UTC);
     }
 
     public double asFractionalHourOfDay() {

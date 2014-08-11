@@ -233,7 +233,8 @@ public class SolarPositionAlgorithmSolverSolution {
 
     }
 
-    public SolarPositionAlgorithmSolverSolution(SolarPositionAlgorithmSolverSolution source) {
+    public SolarPositionAlgorithmSolverSolution(
+	    SolarPositionAlgorithmSolverSolution source) {
 	this.julianDay = source.julianDay;
 	this.julianCentury = source.julianCentury;
 	this.julianEphemerisDay = source.julianEphemerisDay;
@@ -465,7 +466,8 @@ public class SolarPositionAlgorithmSolverSolution {
 	return greenwichSiderealTime;
     }
 
-    public void setGeocentricSunRightAscension(double geocentricSunRightAscension) {
+    public void setGeocentricSunRightAscension(
+	    double geocentricSunRightAscension) {
 	this.geocentricSunRightAscension = geocentricSunRightAscension;
     }
 
@@ -489,7 +491,8 @@ public class SolarPositionAlgorithmSolverSolution {
 	return observerHourAngle;
     }
 
-    public void setSunEquatorialHorizontalParallax(double sunEquatorialHorizontalParallax) {
+    public void setSunEquatorialHorizontalParallax(
+	    double sunEquatorialHorizontalParallax) {
 	this.sunEquatorialHorizontalParallax = sunEquatorialHorizontalParallax;
     }
 
@@ -513,7 +516,8 @@ public class SolarPositionAlgorithmSolverSolution {
 	return topocentricSunDeclination;
     }
 
-    public void setTopocentricSunRightAscension(double topocentricSunRightAscension) {
+    public void setTopocentricSunRightAscension(
+	    double topocentricSunRightAscension) {
 	this.topocentricSunRightAscension = topocentricSunRightAscension;
     }
 
@@ -537,7 +541,8 @@ public class SolarPositionAlgorithmSolverSolution {
 	return topocentricElevationAngle;
     }
 
-    public void setAtmosphericRefractionCorrection(double atmosphericRefractionCorrection) {
+    public void setAtmosphericRefractionCorrection(
+	    double atmosphericRefractionCorrection) {
 	this.atmosphericRefractionCorrection = atmosphericRefractionCorrection;
     }
 
@@ -545,7 +550,8 @@ public class SolarPositionAlgorithmSolverSolution {
 	return atmosphericRefractionCorrection;
     }
 
-    public void setTopocentricElevationAngleCorrected(double topocentricElevationAngleCorrected) {
+    public void setTopocentricElevationAngleCorrected(
+	    double topocentricElevationAngleCorrected) {
 	this.topocentricElevationAngleCorrected = topocentricElevationAngleCorrected;
     }
 
@@ -561,7 +567,8 @@ public class SolarPositionAlgorithmSolverSolution {
 	return topocentricZenithAngle;
     }
 
-    public void setTopocentricAzimuthAngleWestwardFromSouth(double topocentricAzimuthAngleWestwardFromSouth) {
+    public void setTopocentricAzimuthAngleWestwardFromSouth(
+	    double topocentricAzimuthAngleWestwardFromSouth) {
 	this.topocentricAzimuthAngleWestwardFromSouth = topocentricAzimuthAngleWestwardFromSouth;
     }
 
@@ -569,7 +576,8 @@ public class SolarPositionAlgorithmSolverSolution {
 	return topocentricAzimuthAngleWestwardFromSouth;
     }
 
-    public void setTopocentricAzimuthAngleEastwardFromNorth(double topocentricAzimuthAngleEastwardFromNorth) {
+    public void setTopocentricAzimuthAngleEastwardFromNorth(
+	    double topocentricAzimuthAngleEastwardFromNorth) {
 	this.topocentricAzimuthAngleEastwardFromNorth = topocentricAzimuthAngleEastwardFromNorth;
     }
 

@@ -10,7 +10,8 @@ public class EquatorialCoordinates {
     public AngleValue hourAngle;
     public AngleValue declination;
 
-    public EquatorialCoordinates(AngleValue rightAscension, AngleValue hourAngle, AngleValue declination) {
+    public EquatorialCoordinates(AngleValue rightAscension,
+	    AngleValue hourAngle, AngleValue declination) {
 	this.rightAscension = rightAscension;
 	this.hourAngle = hourAngle;
 	this.declination = declination;
