@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="build" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="/home/pjacewicz/workspace/jspacal/lib/jlog-1.0.jar"/>
+	<classpathentry kind="lib" path="/home/pjacewicz/workspace/jspacal/lib/joda-time-2.3.jar"/>
+	<classpathentry kind="lib" path="/home/pjacewicz/workspace/jspacal/lib/junits-1.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

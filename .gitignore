@@ -1,10 +1,8 @@
-*.class
-*.classpath
 *.project
 *.properties
-/.settings
-
-# Package Files #
+*.settings/
 bin/
 build/
 dist/
+doc/
+tmp/
