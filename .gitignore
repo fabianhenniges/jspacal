@@ -1,7 +1,8 @@
 *.project
 *.properties
 *.settings/
-class/
+bin/
+build/
 dist/
 doc/
 tmp/
