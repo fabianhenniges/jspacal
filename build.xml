@@ -87,6 +87,8 @@
 
 		<javac srcdir='${tmp.src.dir}' destdir='${build.class.dir}' classpathref='lib.path' includeantruntime='false'>
 			<include name='**/*.java'/>
+			<exclude name='**/*test*'/>
+			<exclude name='**/*Test*'/>
 		</javac>
 
 		<propertyfile file='${build.properties.file}' comment='Auto-generated with ant'>
