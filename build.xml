@@ -85,7 +85,7 @@
 			</filterset>
 		</copy>
 
-		<javac srcdir='${tmp.src.dir}' destdir='${build.class.dir}' classpathref='lib.path' includeantruntime='false'>
+		<javac srcdir='${tmp.src.dir}' destdir='${build.class.dir}' classpathref='lib.path' debug='true' includeantruntime='false'>
 			<include name='**/*.java'/>
 			<exclude name='**/*test*'/>
 			<exclude name='**/*Test*'/>
