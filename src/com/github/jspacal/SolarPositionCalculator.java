@@ -3,12 +3,15 @@
  */
 package com.github.jspacal;
 
+import static com.github.jspacal.algorithm.SolarPositionAlgorithmConstants.APPNAME;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.github.jlog.Logger;
 import com.github.jspacal.algorithm.SolarPositionAlgorithmParameters;
 import com.github.jspacal.algorithm.SolarPositionAlgorithmSolver;
 import com.github.jspacal.algorithm.SolarPositionAlgorithmSolverSolution;
@@ -23,11 +26,9 @@ import com.github.junits.angle.AngleUnit;
 import com.github.junits.angle.AngleValue;
 import com.github.junits.length.LengthValue;
 
-import static com.github.jspacal.algorithm.SolarPositionAlgorithmConstants.APPNAME;
-
 public class SolarPositionCalculator {
-    private static final Logger LOGGER = Logger
-	    .getLogger(SolarPositionCalculator.class.getName());
+    private static final Logger LOGGER = LoggerFactory
+	    .getLogger(SolarPositionCalculator.class);
 
     private AngleValue longitude;
     private AngleValue latitude;
@@ -50,7 +51,7 @@ public class SolarPositionCalculator {
 			datetime, longitude.inDegrees(), latitude.inDegrees(),
 			altitude.inMeters());
 		if (!parameters.areValid()) {
-		    LOGGER.severe("[{}] calculation error", APPNAME);
+		    LOGGER.error("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
@@ -70,7 +71,7 @@ public class SolarPositionCalculator {
 			datetime, longitude.inDegrees(), latitude.inDegrees(),
 			altitude.inMeters());
 		if (!parameters.areValid()) {
-		    LOGGER.severe("[{}] calculation error", APPNAME);
+		    LOGGER.error("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
@@ -87,7 +88,7 @@ public class SolarPositionCalculator {
 			altitude.inMeters());
 
 		if (!parameters.areValid()) {
-		    LOGGER.severe("[{}] calculation error", APPNAME);
+		    LOGGER.error("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
@@ -118,7 +119,7 @@ public class SolarPositionCalculator {
 			altitude.inMeters());
 
 		if (!parameters.areValid()) {
-		    LOGGER.severe("[{}] calculation error", APPNAME);
+		    LOGGER.error("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
@@ -155,7 +156,7 @@ public class SolarPositionCalculator {
 			altitude.inMeters());
 
 		if (!parameters.areValid()) {
-		    LOGGER.severe("[{}] calculation error", APPNAME);
+		    LOGGER.error("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
@@ -172,7 +173,7 @@ public class SolarPositionCalculator {
 			altitude.inMeters());
 
 		if (!parameters.areValid()) {
-		    LOGGER.severe("[{}] calculation error", APPNAME);
+		    LOGGER.error("[{}] calculation error", APPNAME);
 		    return null;
 		}
 
