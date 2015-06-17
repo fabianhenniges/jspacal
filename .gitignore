@@ -1,8 +1,12 @@
-*.project
-*.properties
-*.settings/
-bin/
-build/
-dist/
-doc/
-tmp/
+syntax: glob
+
+*.class
+*~
+
+# eclipse conf files
+.classpath
+.project
+.settings/
+
+# building 
+target/

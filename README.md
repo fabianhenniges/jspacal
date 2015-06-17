@@ -1,4 +1,4 @@
 jspacal
 =======
 
-Java Solar Position CALculator
+Java Solar Position Algorithm CALculator
