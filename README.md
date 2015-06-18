@@ -1,26 +1,27 @@
-jspacal
-=======
+# JSPACAL
 
 Java Solar Position Algorithm CALculator. Uses NREL SPA algorithm to calculate solar position.
 
-1. USAGE
+## USAGE
 ----------------
 
-* maven
-(1): build the project using the following command
-	mvn clean package
+###  maven
 
-(2): configure local/internal maven repo by installing or deploying artifact.
+* configure local/internal maven repo by installing or deploying artifact
 
-install -> put artifact in local maven repository
+install - put artifact in local maven repository: 
+
 	mvn install
 
-deploy -> put artifact at remote maven repository
-	mvn deploy -DaltDeploymentRepository=id::layout::url
-NOTE: To be able to deploy to a remote repository it must be added to servers tag in settings.xml.
+deploy - put artifact at remote maven repository:
 
-(3): Configure repository in POM - either in pom.xml or in setttings.xml
-pom.xml: add this to your pom.xml file:
+	mvn deploy -DaltDeploymentRepository=id::layout::url
+
+NOTE: To be able to deploy to a remote repository it must be added to servers tag in `settings.xml`.
+
+* configure the repository - either in `pom.xml` or in `setttings.xml`
+
+`pom.xml` - add this to your `pom.xml` file:
 
 	<repositories>
 		<repository>
@@ -29,7 +30,7 @@ pom.xml: add this to your pom.xml file:
 		</repository>
 	</repositories>
 
-settings.xml: userwide settings are modified in the active profile by adding the following to settings.xml:
+`settings.xml` - userwide settings are modified in the active profile by adding the following to `settings.xml` file:
 
 	<profiles>
 		<profile>
@@ -47,15 +48,17 @@ settings.xml: userwide settings are modified in the active profile by adding the
 		<activeProfile>myprofile</activeProfile>
 	</activeProfiles>
 
-(4): add this to your pom.xml file:
+* add this to your `pom.xml` file:
 
-	<dependency>
-		<groupId>com.github.jspacal</groupId>
-		<artifactId>jspacal</artifactId>
-		<version>[current version]</version>
-	</dependency>
+<pre>
+&lt;dependency&gt;
+   &lt;groupId&gt;com.github.jspacal&lt;/groupId&gt;
+   &lt;artifactId&gt;jspacal&lt;/artifactId&gt;
+   &lt;version&gt;1.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
 
-* non-maven
+### non-maven
 Build distribution package of this project using the following command:
 
 	mvn clean package
@@ -65,5 +68,4 @@ Distribution packages in zip/tar.gz/tar.bz2 formats should be created in target 
 2. AUTHORS
 ----------------
 
-Przemyslaw Jacewicz		przemyslaw.jacewicz@gmail.com
-
+Przemyslaw Jacewicz <przemyslaw.jacewicz@gmail.com>
