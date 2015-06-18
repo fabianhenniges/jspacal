@@ -2,21 +2,27 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!-- Basic settings -->
 	<groupId>com.github.jspacal</groupId>
 	<artifactId>jspacal</artifactId>
 	<version>1.0</version>
 
 	<dependencies>
+		<!-- joda-time -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.8</version>
 		</dependency>
+
+		<!-- junits -->	
 		<dependency>
 			<groupId>com.github.junits</groupId>
 			<artifactId>junits</artifactId>
 			<version>1.0</version>
 		</dependency>
+
+		<!-- logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -33,6 +39,7 @@
 			<version>1.1.3</version>
 		</dependency>
 
+		<!-- tests -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -48,6 +55,7 @@
 
 	<build>	
 		<plugins>
+			<!-- Java compiler -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
@@ -56,6 +64,8 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+
+			<!-- jar creation -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>  
 				<artifactId>maven-jar-plugin</artifactId>  
@@ -69,6 +79,8 @@
 					</archive>  
 			       </configuration>  
 			</plugin>  
+
+			<!-- distribution packaging -->
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.5.5</version>
@@ -89,7 +101,9 @@
 			</plugin>
 		</plugins>
 
+		<!-- artifacts activated during build -->
 		<extensions>
+			<!-- wagon for ftp upload -->
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
